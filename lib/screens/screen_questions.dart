@@ -3,8 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_jsontest/models/model_answer.dart';
-import 'package:flutter_jsontest/screens/screen_questions.dart';
-import 'package:flutter_jsontest/widget/buttonRadioItem.dart';
+import 'package:flutter_jsontest/screens/widget/buttonRadioItem.dart';
 import 'package:http/http.dart' as http;
 
 Future<Post> fetchPost(var body) async {
@@ -71,7 +70,7 @@ class ScreenQuestions extends StatelessWidget {
 
     return  Scaffold(
       appBar: AppBar(
-        title: Text(examName),
+        title: Text(examName), actions: [FlatButton(onPressed: (){}, child: Text('제출',style: TextStyle(color: Colors.white,fontSize: 18),))],
       ),
       body: FutureBuilder<Post>(
         future: post,
