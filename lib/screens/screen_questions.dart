@@ -242,9 +242,10 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
       //여기서 문항수 체크도 이루어지게
 
       modelList = value;
+
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-            return ScreenSubmit(examName, modelList, _psyOnlineCode);
+            return new ScreenSubmit(examName, modelList, _psyOnlineCode);
           }));
     });
 
