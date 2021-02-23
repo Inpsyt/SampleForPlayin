@@ -25,9 +25,10 @@ class Post {
 Future<Post> fetchPost(var body) async {
   final url =
       "https://dev.inpsyt.co.kr/front/openApi/test_sampleAPI_aim/selectAPIQuestionList";
-  final Map<String, String> headers = {
-    'Content-Type': 'application/json;charset=utf-8'
-  };
+
+  // final Map<String, String> headers = {
+  //   'Content-Type': 'application/json;charset=utf-8'
+  // };
 
   final response = await http.post(url, body: body);
 
@@ -35,6 +36,7 @@ Future<Post> fetchPost(var body) async {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
 
     print('성공');
+
 
     return Post.fromJson(json.decode(response.body));
     //throw response.body; //바디의 글자를 전부 출력
