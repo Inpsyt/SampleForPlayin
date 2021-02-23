@@ -8,78 +8,26 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ScreenSubmit extends StatelessWidget {
   final String examName;
-  final List<ModelQuestion> modelList;
   final String psyOnlineCode;
+  final List<ModelQuestionChoice> qCList; //문제번호,선택한답안을 저장할 곳
 
   Future<SubmitPost> _fPost;
-
-  List<ModelQuestionChoice> _qCList =
-      new List<ModelQuestionChoice>(); //문제번호,선택한답안을 저장할 곳
   Map<String, dynamic> _body;
 
-  ScreenSubmit(this.examName, this.modelList, this.psyOnlineCode);
+  ScreenSubmit(this.examName,this.qCList , this.psyOnlineCode);
 
-  List<Map<String, dynamic>> toPaperJson(List<ModelQuestionChoice> qCList) {
-    List<Map<String, dynamic>> paperJson = new List<Map<String, dynamic>>();
-
-    for (int i = 0; i < qCList.length; i++) {
-      paperJson.add({
-        'questionNo': qCList[i].questionNo,
-        'choiceNo': qCList[i].choiceNo,
-        'choiceScore': qCList[i].choiceScore
-      });
-    }
-
-    return paperJson;
-  }
-
-
-  List<ModelQuestionChoice> toQuestioinChoiceList( //원본문항리스트에서 문항+결과만 분리하는 작업
-      List<ModelQuestion> modelQuestion) {
-    //여기서는 무응답 갯수랑 무응답에 대해 평균값으로 구하는 작업도 해야 함
-
-    List<ModelQuestionChoice> questionChoiceList =
-        new List<ModelQuestionChoice>();
-
-    for (int i = 0; i < modelQuestion.length; i++) {
-      ModelQuestion questionItem = modelQuestion[i];
-      ModelQuestionChoice questionChoiceItem =
-          new ModelQuestionChoice(); //questionChoiceList하나를 만들기위해 생성한 아이템 하나
-      questionChoiceItem.questionNo = questionItem.questionNo; //그곳에 문제번호부터 입력
-
-      //이쯤에서 미리 무응답에대한 처리 수행
-      questionChoiceItem.choiceNo = '3';
-      questionChoiceItem.choiceScore = '1'; //임시방편
-
-      for (int j = 0; j < questionItem.questionChoiceList.length; j++) {
-        //답이 선택되있는 원본모델
-
-        if (questionItem.questionChoiceList[j].isChoosen) {
-          //만약 원본모델을 순회하다가 isChoosen이 true라면..
-          questionChoiceItem.choiceNo =
-              questionItem.questionChoiceList[j].choiceNo.toString();
-          questionChoiceItem.choiceScore =
-              questionItem.questionChoiceList[j].choiceScore.toString();
-        }
-      }
-      questionChoiceList.add(questionChoiceItem);
-    }
-
-    return questionChoiceList;
-  }
 
   @override
   Widget build(BuildContext context) {
-    _qCList = toQuestioinChoiceList(modelList);
 
 
     //메소드화 시키기 initBody..
     _body = {
       'psyOnlineCode': psyOnlineCode.toString(), //json이 막상 웹에서 받을땐 string형으로 받음
-      'questionCnt': modelList.length.toString(),
+      'questionCnt': qCList.length.toString(),
 
       'paperJson':
-          {"questionChoiceList": toPaperJson(_qCList).toString()}.toString()
+          {'"questionChoiceList"': toPaperJson(qCList).toString()}.toString()
 
     /*
       'paperJson': {
@@ -135,7 +83,6 @@ class ScreenSubmit extends StatelessWidget {
 
     };
 
-    //print(_body);
 
     _fPost = fetchSubmitPost(_body);
 
@@ -154,8 +101,11 @@ class ScreenSubmit extends StatelessWidget {
               }
 
               SubmitPost result = snapshot.data;
-              return Column(children: [
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                 Text(result.message.toString()),
+                SizedBox(height: 30,),
                 RaisedButton(onPressed: (){
                   _OpenOzViwer(psyOnlineCode);
                 }, child: Text('결과보기'))
@@ -173,6 +123,20 @@ class ScreenSubmit extends StatelessWidget {
 
   }
 
+}
+
+List<Map<String, dynamic>> toPaperJson(List<ModelQuestionChoice> qCList) {
+  List<Map<String, dynamic>> paperJson = new List<Map<String, dynamic>>();
+
+  for (int i = 0; i < qCList.length; i++) {
+    paperJson.add({
+      '"questionNo"': qCList[i].questionNo,
+      '"choiceNo"': '"'+qCList[i].choiceNo +'"',
+      '"choiceScore"':'"'+ qCList[i].choiceScore +'"'
+    });
+  }
+
+  return paperJson;
 }
 
 class SubmitPost {

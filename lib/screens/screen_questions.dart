@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_jsontest/models/model_answer.dart';
 import 'package:flutter_jsontest/models/model_question.dart';
+import 'package:flutter_jsontest/models/model_questionchoice.dart';
 import 'package:flutter_jsontest/screens/screen_submit.dart';
 import 'package:flutter_jsontest/screens/widget/widget_radiobtn.dart';
 import 'package:http/http.dart' as http;
@@ -235,6 +236,40 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
     return modelQuestionList;
   }
 
+  List<ModelQuestionChoice> toQuestioinChoiceList( //원본문항리스트에서 문항+결과만 분리하는 작업
+      List<ModelQuestion> modelQuestion) {
+    //여기서는 무응답 갯수랑 무응답에 대해 평균값으로 구하는 작업도 해야 함
+
+    List<ModelQuestionChoice> questionChoiceList =
+    new List<ModelQuestionChoice>();
+
+    for (int i = 0; i < modelQuestion.length; i++) {
+      ModelQuestion questionItem = modelQuestion[i];
+      ModelQuestionChoice questionChoiceItem =
+      new ModelQuestionChoice(); //questionChoiceList하나를 만들기위해 생성한 아이템 하나
+      questionChoiceItem.questionNo = questionItem.questionNo; //그곳에 문제번호부터 입력
+
+      //이쯤에서 미리 무응답에대한 처리 수행
+      questionChoiceItem.choiceNo = '3';
+      questionChoiceItem.choiceScore = '1'; //임시방편
+
+      for (int j = 0; j < questionItem.questionChoiceList.length; j++) {
+        //답이 선택되있는 원본모델
+
+        if (questionItem.questionChoiceList[j].isChoosen) {
+          //만약 원본모델을 순회하다가 isChoosen이 true라면..
+          questionChoiceItem.choiceNo =
+              questionItem.questionChoiceList[j].choiceNo.toString();
+          questionChoiceItem.choiceScore =
+              questionItem.questionChoiceList[j].choiceScore.toString();
+        }
+      }
+      questionChoiceList.add(questionChoiceItem);
+    }
+
+    return questionChoiceList;
+  }
+
   void _submit() {
     List<ModelQuestion> modelList = new List<ModelQuestion>();
 
@@ -245,7 +280,7 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
 
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-            return new ScreenSubmit(examName, modelList, _psyOnlineCode);
+            return new ScreenSubmit(examName, toQuestioinChoiceList(modelList), _psyOnlineCode);
           }));
     });
 
