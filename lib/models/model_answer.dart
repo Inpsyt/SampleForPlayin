@@ -1,7 +1,10 @@
 class ModelAnswer {
-  bool isSelected;
-  final String buttonText;
-  final String text;
 
-  ModelAnswer(this.isSelected, this.buttonText, this.text);
+  int choiceNo;
+  int choiceScore;
+  String choiceDirection;
+  bool isChoosen;
+
+  ModelAnswer({this.choiceNo,this.choiceScore,this.choiceDirection,this.isChoosen});
+
 }
