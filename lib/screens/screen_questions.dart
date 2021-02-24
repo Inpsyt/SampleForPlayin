@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_jsontest/models/model_answer.dart';
@@ -17,7 +17,7 @@ class Post {
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-        //json에서의 최상위/리스트중 번호/해당 문항의 제목
+      //json에서의 최상위/리스트중 번호/해당 문항의 제목
         questionList: json['questionList'],
         psyOnlineCode: json['psyOnlineCode']);
   }
@@ -37,7 +37,6 @@ Future<Post> fetchPost(var body) async {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
 
     print('성공');
-
 
     return Post.fromJson(json.decode(response.body));
     //throw response.body; //바디의 글자를 전부 출력
@@ -62,7 +61,8 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
   final body;
   final String examName;
 
-  Future<List<ModelQuestion>> _fModelQuestionList;
+  Future<List<ModelQuestion>> _fQuestionList;
+  List<ModelQuestion> _questionList;
   Future<Post> _post;
   String _psyOnlineCode;
 
@@ -72,7 +72,8 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
   void initState() {
     // TODO: implement initState
 
-    _fModelQuestionList = fromPost();
+    _fQuestionList = _fromPost(); //Post로부터 받은 json을 List화로 만들어줌
+
     _post.then((value) {
       //중요한 코드 저장
       _psyOnlineCode = value.psyOnlineCode.toString();
@@ -90,7 +91,9 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
         title: Text(examName),
         actions: [
           FlatButton(
-              onPressed: () {_submit();},
+              onPressed: () {
+                _submit();
+              },
               child: Text(
                 '제출',
                 style: TextStyle(color: Colors.white, fontSize: 18),
@@ -98,18 +101,19 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
         ],
       ),
       body: FutureBuilder<List<ModelQuestion>>(
-        future: _fModelQuestionList,
+        future: _fQuestionList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<ModelQuestion> qList = snapshot.data;
+            _questionList = snapshot.data;
 
             return ListView.builder(
-                //문항리스트
+              //문항리스트
                 physics: BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: qList.length,
+                itemCount: _questionList.length,
                 itemBuilder: (context, index) {
-                  List<ModelAnswer> aList = qList[index].questionChoiceList;
+                  List<ModelAnswer> aList =
+                      _questionList[index].questionChoiceList;
 
                   return Container(
                     padding: EdgeInsets.all(20),
@@ -128,7 +132,7 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          qList[index].reactionTitle,
+                          _questionList[index].reactionTitle,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w800),
                         ),
@@ -136,7 +140,7 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
                           height: 17,
                         ),
                         ListView.builder(
-                            //답변리스트
+                          //답변리스트
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: aList.length,
@@ -149,24 +153,21 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
                                         : Colors.lightBlueAccent,
                                     onPressed: () {
                                       for (int i = 0; i < aList.length; i++) {
-                                        _fModelQuestionList.then((value) {
-                                          value[index]
-                                              .questionChoiceList[i]
-                                              .isChoosen = false;
-                                        }); //futer를 다루기 위해선 then을
+                                        _questionList[index]
+                                            .questionChoiceList[i]
+                                            .isChoosen = false;
                                         //선택이 될때마다 future안에 있는 List들의 isChoosen 을 모두 false로 바꿔주고
                                       }
                                       setState(() {
-                                        _fModelQuestionList.then((value) {
-                                          value[index]
-                                              .questionChoiceList[index2]
-                                              .isChoosen = true;
-                                        }); //선택한 index2 값의 isChoosen 하나만 true로 바꾸고 setState()
+                                        _questionList[index]
+                                            .questionChoiceList[index2]
+                                            .isChoosen =
+                                        true; //선택한 index2 값의 isChoosen 하나만 true로 바꾸고 setState()
                                       });
                                     },
                                     child: Padding(
                                         padding:
-                                            EdgeInsets.symmetric(vertical: 10),
+                                        EdgeInsets.symmetric(vertical: 10),
                                         child: Text(
                                             aList[index2].choiceDirection))),
                               );
@@ -197,7 +198,7 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
     );
   }
 
-  Future<List<ModelQuestion>> fromPost() async {
+  Future<List<ModelQuestion>> _fromPost() async {
     List<ModelQuestion> modelQuestionList = new List<ModelQuestion>();
     _post = fetchPost(body);
 
@@ -236,7 +237,8 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
     return modelQuestionList;
   }
 
-  List<ModelQuestionChoice> toQuestioinChoiceList( //원본문항리스트에서 문항+결과만 분리하는 작업
+  List<ModelQuestionChoice> _toQuestioinChoiceList(
+      //원본문항리스트에서 문항+결과만 분리하는 작업
       List<ModelQuestion> modelQuestion) {
     //여기서는 무응답 갯수랑 무응답에 대해 평균값으로 구하는 작업도 해야 함
 
@@ -271,19 +273,12 @@ class _ScreenQuestionsState extends State<ScreenQuestions> {
   }
 
   void _submit() {
-    List<ModelQuestion> modelList = new List<ModelQuestion>();
-
-    _fModelQuestionList.then((value) {
-      //여기서 문항수 체크도 이루어지게
-
-      modelList = value;
-
+    _fQuestionList.then((value) { //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-            return new ScreenSubmit(examName, toQuestioinChoiceList(modelList), _psyOnlineCode);
+            return new ScreenSubmit(
+                examName, _toQuestioinChoiceList(_questionList), _psyOnlineCode);
           }));
     });
-
-
   }
 }

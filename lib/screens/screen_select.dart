@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_jsontest/screens/screen_questionpages.dart';
 import 'package:flutter_jsontest/screens/screen_questions.dart';
 
 class ModelExam {
@@ -140,7 +141,7 @@ class ScreenSelect extends StatelessWidget {
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
-                return ScreenQuestions(modelExam.body, modelExam.name);
+                return ScreenQuestionPages(modelExam.body, modelExam.name);
               }));
         },
         child: Padding(
