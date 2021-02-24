@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_jsontest/screens/screen_select.dart';
 
 
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
 
-
-void main() => runApp(MyApp());
+  // Than we setup preferred orientations,
+  // and only after it finished we run our app
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   MyApp({Key key}) : super(key: key);
@@ -24,12 +31,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      debugShowCheckedModeBanner: false,
-      title: 'Fetch Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ScreenSelect()
+        debugShowCheckedModeBanner: false,
+        title: 'Fetch Data Example',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: ScreenSelect()
     );
   }
 }

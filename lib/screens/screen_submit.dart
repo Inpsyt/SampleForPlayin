@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:flutter_jsontest/constants/constant_colors.dart';
 import 'package:flutter_jsontest/models/model_question.dart';
 import 'package:flutter_jsontest/models/model_questionchoice.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,13 +18,10 @@ class ScreenSubmit extends StatelessWidget {
   Future<SubmitPost> _fPost;
   Map<String, dynamic> _body;
 
-  ScreenSubmit(this.examName,this.qCList , this.psyOnlineCode);
-
+  ScreenSubmit(this.examName, this.qCList, this.psyOnlineCode);
 
   @override
   Widget build(BuildContext context) {
-
-
     //메소드화 시키기 initBody..
     _body = {
       'psyOnlineCode': psyOnlineCode.toString(), //json이 막상 웹에서 받을땐 string형으로 받음
@@ -29,7 +30,7 @@ class ScreenSubmit extends StatelessWidget {
       'paperJson':
           {'"questionChoiceList"': toPaperJson(qCList).toString()}.toString()
 
-    /*
+      /*
     //for test code
       'paperJson': {
         "questionChoiceList": [
@@ -81,16 +82,24 @@ class ScreenSubmit extends StatelessWidget {
         ]
       }.toString()
       */
-
     };
-
 
     _fPost = fetchSubmitPost(_body);
 
+    FadeInController resultBtnFadeController =
+        FadeInController(autoStart: false);
+
+    Timer.periodic(Duration(milliseconds: 1000), (timer) {
+      resultBtnFadeController.fadeIn();
+      timer.cancel();
+    });
+
     return Scaffold(
+      backgroundColor: color_charcoal_purple,
       appBar: AppBar(
         //상단바
-        title: Text(examName),
+        elevation: 0,
+        backgroundColor: color_charcoal_purple,
       ),
       body: Container(
         child: Center(
@@ -105,25 +114,78 @@ class ScreenSubmit extends StatelessWidget {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                Text(result.message.toString()),
-                SizedBox(height: 30,),
-                RaisedButton(onPressed: (){
-                  _OpenOzViwer(psyOnlineCode);
-                }, child: Text('결과보기'))
-              ],);
+                  FadeIn(
+                    child: Text(
+                      "수고하셨습니다!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    duration: Duration(milliseconds: 1000),
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  FadeIn(
+                    duration: Duration(milliseconds: 1000),
+                    controller: resultBtnFadeController,
+                    child:
+                    NeumorphicButton(
+                        margin: EdgeInsets.only(top: 12),
+                        onPressed: () {
+                          _OpenOzViwer(psyOnlineCode);
+                        },
+                        style: NeumorphicStyle(
+                          color: color_charcoal_purple,
+                          shadowLightColor: color_charcoal_purple_light,
+                          shape: NeumorphicShape.flat,
+                          boxShape:
+                          NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
+                          //border: NeumorphicBorder()
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 55,vertical: 13),
+                        child: Text(
+                          "결과 보기",
+                          style: TextStyle(color: Colors.white,fontSize: 17),
+                        )),
+
+                    /*
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                        color: color_charcoal_purple,
+                        onPressed: () {
+                          _OpenOzViwer(psyOnlineCode);
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            child: Text(
+                              '결과보기',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 22),
+                            ))),
+
+                    */
+                  )
+                ],
+              );
             },
           ),
         ),
       ),
     );
   }
+
   void _OpenOzViwer(String psyCode) async {
-    String url = 'https://dev.inpsyt.co.kr/front/inpsyt/testing/resultMain/'+psyCode+'/HTML5';
-    if(await canLaunch(url)) await launch(url);
-    else throw 'Could not Launch '+url;
-
+    String url = 'https://dev.inpsyt.co.kr/front/inpsyt/testing/resultMain/' +
+        psyCode +
+        '/HTML5';
+    if (await canLaunch(url))
+      await launch(url);
+    else
+      throw 'Could not Launch ' + url;
   }
-
 }
 
 List<Map<String, dynamic>> toPaperJson(List<ModelQuestionChoice> qCList) {
@@ -132,8 +194,8 @@ List<Map<String, dynamic>> toPaperJson(List<ModelQuestionChoice> qCList) {
   for (int i = 0; i < qCList.length; i++) {
     paperJson.add({
       '"questionNo"': qCList[i].questionNo,
-      '"choiceNo"': '"'+qCList[i].choiceNo +'"',
-      '"choiceScore"':'"'+ qCList[i].choiceScore +'"'
+      '"choiceNo"': '"' + qCList[i].choiceNo + '"',
+      '"choiceScore"': '"' + qCList[i].choiceScore + '"'
     });
   }
 
@@ -175,4 +237,3 @@ Future<SubmitPost> fetchSubmitPost(var body) async {
     throw Exception('Failed to load post');
   }
 }
-

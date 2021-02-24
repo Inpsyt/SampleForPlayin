@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_jsontest/constants/constant_colors.dart';
 import 'package:flutter_jsontest/models/model_answer.dart';
 import 'package:flutter_jsontest/models/model_question.dart';
 import 'package:flutter_jsontest/models/model_questionchoice.dart';
 import 'package:flutter_jsontest/screens/screen_submit.dart';
-import 'package:flutter_jsontest/screens/widget/widget_radiobtn.dart';
 import 'package:http/http.dart' as http;
-import 'package:percent_indicator/percent_indicator.dart';
 
 class Post {
   dynamic questionList;
@@ -97,6 +93,14 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
         appBar: AppBar(
           backgroundColor: color_charcoal_purple,
           elevation: 0,
+          actions: [ FlatButton(
+              onPressed: () {
+                _submit();
+              },
+              child: Text(
+                '제출',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ))],
         ),
         body: FutureBuilder<List<ModelQuestion>>(
           future: _fQuestionList,
@@ -126,16 +130,34 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold),
                           )),
-                      SizedBox(
-                        height: 5,
-                      ),
+
+                      Slider(
+
+                        activeColor: color_dark_black,
+                        inactiveColor: Colors.white,
+                        value: _currentPage.toDouble(),
+                        min: 0,
+                        max: _questionList.length.toDouble()-1,
+                        //divisions: _questionList.length, //이상한 점박이들 생김
+                        label: (_currentPage.round()+1).toString(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _currentPage = value.toInt();
+                            _pageController.jumpToPage(_currentPage);
+                          });
+                        },
+                      )
+                      /*
                       LinearPercentIndicator(
+
                         lineHeight: 4.0,
                         progressColor: color_dark_black,
                         percent: ((_currentPage + 1) / _questionList.length)
                             .toDouble(),
                         animation: false,
                       )
+
+                       */
                     ],
                   ),
                 ),
@@ -180,13 +202,13 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                       }),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  padding: EdgeInsets.symmetric(horizontal: 0),
                   child: Center(
                     child: ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         separatorBuilder: (context, index) {
                           return SizedBox(
-                            height: 6,
+                            height: 0,
                           );
                         },
                         shrinkWrap: true,
@@ -194,37 +216,60 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                             .questionChoiceList
                             .length,
                         itemBuilder: (context, index2) {
-                          return RaisedButton(
-                              elevation: 0,
-                              color: _questionList[_currentPage].questionChoiceList[index2].isChoosen?color_charcoal_purple:Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: color_light_black),
-                                  borderRadius: BorderRadius.circular(10)),
-                              onPressed: () {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 50),
+                            child: RaisedButton(
+                                elevation: 0,
+                                highlightColor: color_charcoal_purple,
+                                splashColor: color_charcoal_purple,
+                                focusColor: color_charcoal_purple,
+                                color: _questionList[_currentPage]
+                                        .questionChoiceList[index2]
+                                        .isChoosen
+                                    ? color_charcoal_purple
+                                    : Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(color: color_light_black),
+                                    borderRadius: BorderRadius.circular(10)),
+                                onPressed: () {
+                                  for (int i = 0;
+                                      i <
+                                          _questionList[_currentPage]
+                                              .questionChoiceList
+                                              .length;
+                                      i++) {
+                                    _questionList[_currentPage]
+                                        .questionChoiceList[i]
+                                        .isChoosen = false;
+                                  }
+                                  setState(() {
+                                    _questionList[_currentPage]
+                                        .questionChoiceList[index2]
+                                        .isChoosen = true;
+                                  });
 
-                                for(int i =0 ; i<_questionList[_currentPage].questionChoiceList.length; i++){
-                                  _questionList[_currentPage].questionChoiceList[i].isChoosen = false;
-                                }
-                                setState(() {
-                                  _questionList[_currentPage].questionChoiceList[index2].isChoosen = true;
-                                });
-
-                                _pageController.nextPage(duration: Duration(milliseconds: 200), curve:Curves.decelerate );
-
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 7),
-                                child: Text(
-                                  _questionList[_currentPage]
-                                      .questionChoiceList[index2]
-                                      .choiceDirection
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: _questionList[_currentPage].questionChoiceList[index2].isChoosen?Colors.white:color_dark_grey),
-                                ),
-                              ));
+                                  _pageController.nextPage(
+                                      duration: Duration(milliseconds: 200),
+                                      curve: Curves.decelerate);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 7),
+                                  child: Text(
+                                    _questionList[_currentPage]
+                                        .questionChoiceList[index2]
+                                        .choiceDirection
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: _questionList[_currentPage]
+                                                .questionChoiceList[index2]
+                                                .isChoosen
+                                            ? Colors.white
+                                            : color_dark_grey),
+                                  ),
+                                )),
+                          );
                         }),
                   ),
                   decoration: BoxDecoration(

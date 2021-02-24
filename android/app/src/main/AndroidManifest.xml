@@ -10,7 +10,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="인싸이트 JSON파싱 샘플"
+        android:label="Sample for Playin!"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
