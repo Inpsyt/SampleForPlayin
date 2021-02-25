@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:playinsample/constants/constant_colors.dart';
+import 'package:playinsample/screens/screen_profileset.dart';
 import 'package:playinsample/screens/screen_questionpages.dart';
-
 
 class ModelExam {
   final String name;
@@ -127,10 +127,21 @@ class ScreenSelect extends StatelessWidget {
         ),
         backgroundColor: color_silver_white,
         appBar: AppBar(
-          title: Text('Sample for Playin!',style: TextStyle(fontWeight: FontWeight.w300),),
+          title: Text(
+            'Sample for Playin!',
+            style: TextStyle(fontWeight: FontWeight.w300),
+          ),
           backgroundColor: color_charcoal_purple,
           elevation: 0,
-          actions: [IconButton(icon: Icon(Icons.settings), onPressed: (){})],
+          actions: [
+            IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ScreenProfileSet();
+                  }));
+                })
+          ],
         ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
@@ -175,7 +186,10 @@ class ScreenSelect extends StatelessWidget {
                       ),
                       Text(
                         '(대학생) 만 23세',
-                        style: TextStyle(color: Colors.white, fontSize: 15,fontWeight: FontWeight.w300),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300),
                       )
                     ],
                   ),
@@ -201,7 +215,7 @@ class ScreenSelect extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       child:
 
-      /*NeumorphicButton(
+          /*NeumorphicButton(
           margin: EdgeInsets.only(top: 12),
           onPressed: () {
             Navigator.push(context,
@@ -224,22 +238,19 @@ class ScreenSelect extends StatelessWidget {
 
        */
 
-
-      RaisedButton(
+          RaisedButton(
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
-                return ScreenQuestionPages(modelExam.body, modelExam.name);
-              }));
+            return ScreenQuestionPages(modelExam.body, modelExam.name);
+          }));
         },
-
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 15),
             child: Text(modelExam.name)),
         color: Colors.white,
         elevation: 3,
       ),
-
     );
   }
 }
