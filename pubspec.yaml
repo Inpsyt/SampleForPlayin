@@ -27,6 +27,8 @@ dependencies:
   http:
   url_launcher: ^5.7.10
   flutter_fadein: ^1.1.1
+  provider:
+  percent_indicator: 2.1.7+2
   #flutter_neumorphic: ^3.0.4+1
 
   # The following adds the Cupertino Icons font to your application.

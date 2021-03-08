@@ -1,7 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:playinsample/constants/constant_colors.dart';
 import 'package:playinsample/models/model_answer.dart';
 import 'package:playinsample/models/model_question.dart';
@@ -60,10 +65,14 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   final body;
   final String examName;
 
+  final double _paddingHorizontal = 40;
+
   Future<List<ModelQuestion>> _fQuestionList;
   List<ModelQuestion> _questionList;
   Future<Post> _post;
   String _psyOnlineCode;
+  bool _isVoiceRecog = true;
+  Timer _waitPageTimer;
 
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
@@ -89,11 +98,15 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
+    print('ScreenSize :' + screenSize.width.toString());
+    print('ScreenSize :' + screenSize.height.toString());
+
+
     return WillPopScope(
       onWillPop: () {
         return showDialog(
             context: context,
-            builder: (context)=> new AlertDialog(
+            builder: (context) => new AlertDialog(
                   title: Text('정말로 종료하시겠습니까?'),
                   content: Text('진행중인 정보는 저장되지 않습니다.'),
                   actions: [
@@ -110,15 +123,21 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                         Navigator.of(context).pop(true);
                       },
                     )
-
                   ],
                 ));
       },
       child: Scaffold(
-          backgroundColor: color_charcoal_purple,
+          backgroundColor: color_eui_light,
           appBar: AppBar(
-            backgroundColor: color_charcoal_purple,
+            backgroundColor: color_eui_light,
             elevation: 0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: color_text_dark,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             actions: [
               FlatButton(
                   onPressed: () {
@@ -126,7 +145,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                   },
                   child: Text(
                     '제출',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: color_text_dark, fontSize: 18),
                   ))
             ],
           ),
@@ -142,52 +161,60 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
               _questionList = snapshot.data;
 
               return Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  SizedBox(
+                    height: 30,
+                  ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    //상단부 막대
+                    padding: EdgeInsets.symmetric(horizontal: _paddingHorizontal,vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(width: double.infinity),
-                        Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              examName,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        Slider(
-                          activeColor: color_dark_black,
-                          inactiveColor: Colors.white,
-                          value: _currentPage.toDouble(),
-                          min: 0,
-                          max: _questionList.length.toDouble() - 1,
-                          //divisions: _questionList.length, //이상한 점박이들 생김
-                          label: (_currentPage.round() + 1).toString(),
-                          onChanged: (double value) {
-                            setState(() {
-                              _currentPage = value.toInt();
-                              _pageController.jumpToPage(_currentPage);
-                            });
-                          },
-                        )
+
                         /*
+                        SliderTheme(
+                          data: SliderThemeData(
+                            thumbColor: Colors.transparent,
+                          ),
+                          child: Slider(
+
+                            activeColor: color_charcoal_blue,
+                            inactiveColor: color_black_300,
+                            value: _currentPage.toDouble(),
+                            min: 0,
+                            max: _questionList.length.toDouble() - 1,
+                            //divisions: _questionList.length, //이상한 점박이들 생김
+                            label: (_currentPage.round() + 1).toString(),
+
+
+                            onChanged: (double value) {
+                              setState(() {
+                                _currentPage = value.toInt();
+                                _pageController.jumpToPage(_currentPage);
+                              });
+                            },
+                          ),
+                        )
+                         */
+
                         LinearPercentIndicator(
 
-                          lineHeight: 4.0,
-                          progressColor: color_dark_black,
-                          percent: ((_currentPage + 1) / _questionList.length)
-                              .toDouble(),
-                          animation: false,
-                        )
+                          percent: (_currentPage+1)/_questionList.length.toDouble(),
+                          backgroundColor: color_black_300,
+                          progressColor: color_charcoal_blue,
+                        ),
 
-                         */
+
+
                       ],
                     ),
                   ),
                   Expanded(
+                    //상단부 문항 영
                     child: PageView.builder(
                         onPageChanged: (index) {
                           setState(() {
@@ -195,33 +222,29 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                           });
                         },
                         controller: _pageController,
+
                         physics: BouncingScrollPhysics(),
                         itemCount: _questionList.length,
                         itemBuilder: (context, index) {
                           return Center(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30),
+                              padding: EdgeInsets.symmetric(horizontal: _paddingHorizontal),
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Text(
-                                    _questionList[index].questionNo.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.bold),
-                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text(
-                                    _questionList[index]
-                                        .reactionTitle
-                                        .toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w100),
+                                  Container(
+                                    child: Text(
+                                      _questionList[index]
+                                          .reactionTitle
+                                          .toString(),
+                                      style: TextStyle(
+                                          color: color_text_dark,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   )
                                 ],
                               ),
@@ -230,25 +253,105 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                         }),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Center(
-                      child: ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: 0,
-                            );
-                          },
-                          shrinkWrap: true,
-                          itemCount: _questionList[_currentPage]
-                              .questionChoiceList
-                              .length,
-                          itemBuilder: (context, index2) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 50),
-                              child: RaisedButton(
-                                  elevation: 0,
+                    //하단부 선택영역
+                    height: screenSize.height / 2,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ListView.separated(
+                            physics: BouncingScrollPhysics(),
+                            separatorBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: _paddingHorizontal),
+                                child: Container(
+                                  height: 1,
+                                  color: color_black_300,
+                                ),
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: _questionList[_currentPage]
+                                .questionChoiceList
+                                .length,
+                            itemBuilder: (context, index2) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 0),
+                                child: ListTile(
+                                  title: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 7, horizontal: _paddingHorizontal),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          _questionList[_currentPage]
+                                              .questionChoiceList[index2]
+                                              .choiceDirection
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight:
+                                                  _questionList[_currentPage]
+                                                          .questionChoiceList[
+                                                              index2]
+                                                          .isChoosen
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w500,
+                                              color: _questionList[_currentPage]
+                                                      .questionChoiceList[
+                                                          index2]
+                                                      .isChoosen
+                                                  ? Colors.black
+                                                  : color_black_500),
+                                        ),
+                                        Icon(
+                                          Icons.check_circle,
+                                          color: _questionList[_currentPage]
+                                                  .questionChoiceList[index2]
+                                                  .isChoosen
+                                              ? color_charcoal_blue
+                                              : color_black_300,
+                                          size: 20,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  onTap: () {
+
+
+                                    if(_waitPageTimer !=null && _waitPageTimer.isActive) {
+                                      return;
+
+                                    }
+
+
+                                    for (int i = 0;
+                                        i <
+                                            _questionList[_currentPage]
+                                                .questionChoiceList
+                                                .length;
+                                        i++) {
+                                      _questionList[_currentPage]
+                                          .questionChoiceList[i]
+                                          .isChoosen = false;
+                                    }
+                                    setState(() {
+                                      _questionList[_currentPage]
+                                          .questionChoiceList[index2]
+                                          .isChoosen = true;
+                                    });
+
+
+                                    _nextPage();
+
+                                  },
+                                ),
+
+                                /*
+                              FlatButton(
                                   highlightColor: color_charcoal_purple,
                                   splashColor: color_charcoal_purple,
                                   focusColor: color_charcoal_purple,
@@ -258,8 +361,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                       ? color_charcoal_purple
                                       : Colors.white,
                                   shape: RoundedRectangleBorder(
-                                      side:
-                                          BorderSide(color: color_light_black),
+                                      side: BorderSide(color: color_black_600),
                                       borderRadius: BorderRadius.circular(10)),
                                   onPressed: () {
                                     for (int i = 0;
@@ -296,24 +398,57 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                   .questionChoiceList[index2]
                                                   .isChoosen
                                               ? Colors.white
-                                              : color_dark_grey),
+                                              : color_black_500),
                                     ),
                                   )),
-                            );
-                          }),
+
+
+                              */
+                              );
+                            }),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CupertinoSwitch(
+                              value: _isVoiceRecog,
+                              onChanged: (isChecked) {
+                                setState(() {
+                                  _isVoiceRecog = !_isVoiceRecog;
+                                });
+                              },
+                              activeColor: color_charcoal_blue,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('음성으로도 응답할 수 있어요')
+                          ],
+                        )
+                      ],
                     ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30))),
-                    height: screenSize.height / 2,
                   )
                 ],
               );
             },
           )),
     );
+  }
+
+  void _nextPage(){
+
+    if(_waitPageTimer !=null) {
+      _waitPageTimer.cancel();
+
+    }
+
+
+    _waitPageTimer = Timer(Duration(milliseconds: 500),(){
+      _pageController.nextPage(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.decelerate);
+
+    });
   }
 
   Future<List<ModelQuestion>> _fromPost() async {
