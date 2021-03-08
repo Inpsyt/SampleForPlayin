@@ -23,20 +23,20 @@ class ScreenSelect extends StatelessWidget {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          backgroundColor: color_charcoal_purple,
+          backgroundColor: color_charcoal_blue,
           child: Icon(Icons.cloud_download_rounded),
         ),
         backgroundColor: color_silver_white,
         appBar: AppBar(
           title: Text(
             'Sample for Playin!',
-            style: TextStyle(fontWeight: FontWeight.w300),
+            style: TextStyle(fontWeight: FontWeight.w300,color: Colors.white),
           ),
-          backgroundColor: color_charcoal_purple,
+          backgroundColor: color_charcoal_blue,
           elevation: 0,
           actions: [
             IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.settings,color: Colors.white,),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ScreenProfileSet();
@@ -57,7 +57,7 @@ class ScreenSelect extends StatelessWidget {
                         blurRadius: 10,
                         offset: Offset(0.1, 0.9))
                   ],
-                  color: color_charcoal_purple,
+                  color: color_charcoal_blue,
                 ),
                 child: Center(
                   child: Column(

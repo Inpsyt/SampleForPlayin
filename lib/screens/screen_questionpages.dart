@@ -443,7 +443,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     }
 
 
-    _waitPageTimer = Timer(Duration(milliseconds: 500),(){
+    _waitPageTimer = Timer(Duration(milliseconds: 300),(){
       _pageController.nextPage(
           duration: Duration(milliseconds: 300),
           curve: Curves.decelerate);
