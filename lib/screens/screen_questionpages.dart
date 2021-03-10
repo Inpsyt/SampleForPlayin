@@ -76,6 +76,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+  int _selectedCount = 1;
 
   _ScreenQuestionPagesState(this.body, this.examName);
 
@@ -139,6 +140,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
               },
             ),
             actions: [
+
+              /*
               FlatButton(
                   onPressed: () {
                     _submit();
@@ -147,6 +150,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                     '제출',
                     style: TextStyle(color: color_text_dark, fontSize: 18),
                   ))
+
+              */
             ],
           ),
           body: FutureBuilder<List<ModelQuestion>>(
@@ -214,8 +219,9 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                     ),
                   ),
                   Expanded(
-                    //상단부 문항 영
+                    //상단부 문항 슬라이더
                     child: PageView.builder(
+
                         onPageChanged: (index) {
                           setState(() {
                             _currentPage = index;
@@ -224,7 +230,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                         controller: _pageController,
 
                         physics: BouncingScrollPhysics(),
-                        itemCount: _questionList.length,
+                        itemCount: _selectedCount,
                         itemBuilder: (context, index) {
                           return Center(
                             child: Padding(
@@ -323,8 +329,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
 
                                     if(_waitPageTimer !=null && _waitPageTimer.isActive) {
-                                      return;
-
+                                      return; //페이지가 넘어가기 전 막 클릭했을 경우 아무것도 변경 안되게
                                     }
 
 
@@ -342,8 +347,12 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                       _questionList[_currentPage]
                                           .questionChoiceList[index2]
                                           .isChoosen = true;
+
+
                                     });
 
+
+                                    _checkSelectedCount();
 
                                     _nextPage();
 
@@ -433,6 +442,26 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
             },
           )),
     );
+  }
+
+  void _checkSelectedCount(){
+    int selectedCount =1;
+
+    for(int j = 0 ; j<_questionList.length; j++){
+      for(int k=0; k<_questionList[j].questionChoiceList.length;k++){
+        if(_questionList[j].questionChoiceList[k].isChoosen == true){
+          selectedCount++;
+        }
+      }
+    }
+
+    if(selectedCount>=_questionList.length){
+      _selectedCount = _questionList.length;
+      _submit();
+      return;
+    }else {
+      _selectedCount = selectedCount;
+    }
   }
 
   void _nextPage(){
