@@ -19,3 +19,5 @@ final Color color_text_dark = Color(0xFF333333);
 
 
 //transparent
+
+final Color color_trans_black_300 = Color(0x22000000);

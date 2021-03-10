@@ -73,12 +73,23 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   List<ModelQuestion> _questionList;
   Future<Post> _post;
   String _psyOnlineCode;
-  bool _isVoiceRecog = true;
+
   Timer _waitPageTimer;
 
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   int _selectedCount = 1;
+
+  //voice recognition 관련 변수
+  stt.SpeechToText _speech;
+  String _text = 'Press the button and start speaking';
+  double _confidence = 1.0;
+  bool _isVoiceRecog = false;
+
+
+  //dynamic listview 변수
+  bool isMoreList = false;
+  double _containerHeigh = 300;
 
   _ScreenQuestionPagesState(this.body, this.examName);
 
@@ -93,6 +104,10 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       _psyOnlineCode = value.psyOnlineCode.toString();
       print('psyOnlineCoce : ' + _psyOnlineCode);
     });
+
+    _speech = stt.SpeechToText();
+
+    _listenVoice(true);
 
     super.initState();
   }
@@ -142,7 +157,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
               },
             ),
             actions: [
-
               /*
               FlatButton(
                   onPressed: () {
@@ -160,13 +174,14 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
             future: _fQuestionList,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
+
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
               _questionList = snapshot.data;
-
+              _refreshDynamicListView();
               return Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -176,7 +191,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                   ),
                   Container(
                     //상단부 막대
-                    padding: EdgeInsets.symmetric(horizontal: _paddingHorizontal,vertical: 10),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: _paddingHorizontal, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -209,34 +225,31 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                          */
 
                         LinearPercentIndicator(
-
-                          percent: (_currentPage+1)/_questionList.length.toDouble(),
+                          percent: (_currentPage + 1) /
+                              _questionList.length.toDouble(),
                           backgroundColor: color_black_300,
                           progressColor: color_charcoal_blue,
                         ),
-
-
-
                       ],
                     ),
                   ),
                   Expanded(
                     //상단부 문항 슬라이더
                     child: PageView.builder(
-
                         onPageChanged: (index) {
                           setState(() {
                             _currentPage = index;
+                            _refreshDynamicListView();
                           });
                         },
                         controller: _pageController,
-
                         physics: BouncingScrollPhysics(),
                         itemCount: _selectedCount,
                         itemBuilder: (context, index) {
                           return Center(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: _paddingHorizontal),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: _paddingHorizontal),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -267,156 +280,178 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ListView.separated(
-                            physics: BouncingScrollPhysics(),
-                            separatorBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: _paddingHorizontal),
-                                child: Container(
-                                  height: 1,
-                                  color: color_black_300,
-                                ),
-                              );
-                            },
-                            shrinkWrap: true,
-                            itemCount: _questionList[_currentPage]
-                                .questionChoiceList
-                                .length,
-                            itemBuilder: (context, index2) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(vertical: 0),
-                                child: ListTile(
-                                  title: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 7, horizontal: _paddingHorizontal),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          _questionList[_currentPage]
-                                              .questionChoiceList[index2]
-                                              .choiceDirection
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight:
-                                                  _questionList[_currentPage]
-                                                          .questionChoiceList[
-                                                              index2]
-                                                          .isChoosen
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w500,
-                                              color: _questionList[_currentPage]
-                                                      .questionChoiceList[
-                                                          index2]
-                                                      .isChoosen
-                                                  ? Colors.black
-                                                  : color_black_500),
+                        Stack(
+                          children: [
+
+                            Positioned(
+                              top: 0,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                width: 10000,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          isMoreList?color_trans_black_300:Colors.transparent,
+                                      Colors.transparent
+                                    ])),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                width: 1000,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Colors.transparent,
+                                          isMoreList?color_trans_black_300:Colors.transparent,
+                                        ])),
+                              ),
+                            ),
+                            AnimatedContainer(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.linear,
+                              height: _containerHeigh,
+
+                              child: Center(
+                                child: ListView.separated(
+                                  physics: isMoreList?BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()):NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: _paddingHorizontal),
+                                        child: Container(
+                                          height: 1,
+                                          color: color_trans_black_300,
                                         ),
-                                        Icon(
-                                          Icons.check_circle,
-                                          color: _questionList[_currentPage]
-                                                  .questionChoiceList[index2]
-                                                  .isChoosen
-                                              ? color_charcoal_blue
-                                              : color_black_300,
-                                          size: 20,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  onTap: () {
+                                      );
+                                    },
+                                    itemCount: _questionList[_currentPage]
+                                        .questionChoiceList
+                                        .length,
+                                    itemBuilder: (context, index2) {
+                                      return Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 0),
+                                        child: ListTile(
+                                          title: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 7,
+                                                horizontal: _paddingHorizontal),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  _questionList[_currentPage]
+                                                      .questionChoiceList[index2]
+                                                      .choiceDirection
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight: _questionList[
+                                                      _currentPage]
+                                                          .questionChoiceList[
+                                                      index2]
+                                                          .isChoosen
+                                                          ? FontWeight.bold
+                                                          : FontWeight.w500,
+                                                      color: _questionList[
+                                                      _currentPage]
+                                                          .questionChoiceList[
+                                                      index2]
+                                                          .isChoosen
+                                                          ? Colors.black
+                                                          : color_black_500),
+                                                ),
+                                                Icon(
+                                                  Icons.check_circle,
+                                                  color:
+                                                  _questionList[_currentPage]
+                                                      .questionChoiceList[
+                                                  index2]
+                                                      .isChoosen
+                                                      ? color_charcoal_blue
+                                                      : color_trans_black_300,
+                                                  size: 20,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          onTap: () =>
+                                              _onChoiceBtnClicked(index2),
+                                        ),
 
-
-                                    if(_waitPageTimer !=null && _waitPageTimer.isActive) {
-                                      return; //페이지가 넘어가기 전 막 클릭했을 경우 아무것도 변경 안되게
-                                    }
-
-
-                                    for (int i = 0;
-                                        i <
+                                        /*
+                                    FlatButton(
+                                        highlightColor: color_charcoal_purple,
+                                        splashColor: color_charcoal_purple,
+                                        focusColor: color_charcoal_purple,
+                                        color: _questionList[_currentPage]
+                                                .questionChoiceList[index2]
+                                                .isChoosen
+                                            ? color_charcoal_purple
+                                            : Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                            side: BorderSide(color: color_black_600),
+                                            borderRadius: BorderRadius.circular(10)),
+                                        onPressed: () {
+                                          for (int i = 0;
+                                              i <
+                                                  _questionList[_currentPage]
+                                                      .questionChoiceList
+                                                      .length;
+                                              i++) {
                                             _questionList[_currentPage]
-                                                .questionChoiceList
-                                                .length;
-                                        i++) {
-                                      _questionList[_currentPage]
-                                          .questionChoiceList[i]
-                                          .isChoosen = false;
-                                    }
-                                    setState(() {
-                                      _questionList[_currentPage]
-                                          .questionChoiceList[index2]
-                                          .isChoosen = true;
-
-
-                                    });
-
-
-                                    _checkSelectedCount();
-
-                                    _nextPage();
-
-                                  },
-                                ),
-
-                                /*
-                              FlatButton(
-                                  highlightColor: color_charcoal_purple,
-                                  splashColor: color_charcoal_purple,
-                                  focusColor: color_charcoal_purple,
-                                  color: _questionList[_currentPage]
-                                          .questionChoiceList[index2]
-                                          .isChoosen
-                                      ? color_charcoal_purple
-                                      : Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: color_black_600),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  onPressed: () {
-                                    for (int i = 0;
-                                        i <
+                                                .questionChoiceList[i]
+                                                .isChoosen = false;
+                                          }
+                                          setState(() {
                                             _questionList[_currentPage]
-                                                .questionChoiceList
-                                                .length;
-                                        i++) {
-                                      _questionList[_currentPage]
-                                          .questionChoiceList[i]
-                                          .isChoosen = false;
-                                    }
-                                    setState(() {
-                                      _questionList[_currentPage]
-                                          .questionChoiceList[index2]
-                                          .isChoosen = true;
-                                    });
+                                                .questionChoiceList[index2]
+                                                .isChoosen = true;
+                                          });
 
-                                    _pageController.nextPage(
-                                        duration: Duration(milliseconds: 200),
-                                        curve: Curves.decelerate);
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 7),
-                                    child: Text(
-                                      _questionList[_currentPage]
-                                          .questionChoiceList[index2]
-                                          .choiceDirection
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: _questionList[_currentPage]
-                                                  .questionChoiceList[index2]
-                                                  .isChoosen
-                                              ? Colors.white
-                                              : color_black_500),
-                                    ),
-                                  )),
+                                          _pageController.nextPage(
+                                              duration: Duration(milliseconds: 200),
+                                              curve: Curves.decelerate);
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 7),
+                                          child: Text(
+                                            _questionList[_currentPage]
+                                                .questionChoiceList[index2]
+                                                .choiceDirection
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: _questionList[_currentPage]
+                                                        .questionChoiceList[index2]
+                                                        .isChoosen
+                                                    ? Colors.white
+                                                    : color_black_500),
+                                          ),
+                                        )),
 
 
-                              */
-                              );
-                            }),
+                                    */
+                                      );
+                                    }),
+                              ),
+                            ),
+
+                          ],
+                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -426,6 +461,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                               onChanged: (isChecked) {
                                 setState(() {
                                   _isVoiceRecog = !_isVoiceRecog;
+                                  _listenVoice(true);
                                 });
                               },
                               activeColor: color_charcoal_blue,
@@ -446,57 +482,143 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     );
   }
 
-  void _checkSelectedCount(){
-    int selectedCount =1;
+  void _onChoiceBtnClicked(int index2) {
+    if (_waitPageTimer != null && _waitPageTimer.isActive) {
+      return; //페이지가 넘어가기 전 막 클릭했을 경우 아무것도 변경 안되게
+    }
 
-    for(int j = 0 ; j<_questionList.length; j++){
-      for(int k=0; k<_questionList[j].questionChoiceList.length;k++){
-        if(_questionList[j].questionChoiceList[k].isChoosen == true){
+    for (int i = 0;
+        i < _questionList[_currentPage].questionChoiceList.length;
+        i++) {
+      _questionList[_currentPage].questionChoiceList[i].isChoosen = false;
+    }
+    setState(() {
+      _questionList[_currentPage].questionChoiceList[index2].isChoosen = true;
+      _refreshDynamicListView();
+    });
+
+    _checkSelectedCount();
+    _nextPage();
+  }
+
+  void _refreshDynamicListView(){
+    if(_questionList[_currentPage].questionChoiceList.length>5){
+      isMoreList = true;
+      _containerHeigh = MediaQuery.of(context).size.height/2-100;
+    }else
+    {
+      isMoreList = false;
+      _containerHeigh =300;
+    }
+  }
+
+  void _checkSelectedCount() {
+    int selectedCount = 1;
+
+    for (int j = 0; j < _questionList.length; j++) {
+      for (int k = 0; k < _questionList[j].questionChoiceList.length; k++) {
+        if (_questionList[j].questionChoiceList[k].isChoosen == true) {
           selectedCount++;
         }
       }
     }
 
-    if(selectedCount>=_questionList.length){
+    if (selectedCount >= _questionList.length) {
       _selectedCount = _questionList.length;
       _submit();
       return;
-    }else {
+    } else {
       _selectedCount = selectedCount;
     }
   }
 
-  void _nextPage(){
-
-    if(_waitPageTimer !=null) {
+  void _nextPage() {
+    if (_waitPageTimer != null) {
       _waitPageTimer.cancel();
-
     }
 
-
-    _waitPageTimer = Timer(Duration(milliseconds: 300),(){
+    _waitPageTimer = Timer(Duration(milliseconds: 300), () {
       _pageController.nextPage(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.decelerate);
-
+          duration: Duration(milliseconds: 300), curve: Curves.decelerate);
     });
   }
 
   void _submit() {
-
-    showDialog(context: context, builder: (_){
-      return AlertDialog(title: Text('제출하시겠습니까?'),content: Text(''),);
-    });
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text('제출하시겠습니까?'),
+            content: Text(''),
+          );
+        });
 
     _fQuestionList.then((value) {
       //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-            return new ScreenSubmit(
-                examName, _toQuestioinChoiceList(_questionList), _psyOnlineCode);
-          }));
+        return new ScreenSubmit(
+            examName, _toQuestioinChoiceList(_questionList), _psyOnlineCode);
+      }));
     });
   }
+
+  void _listenVoice(bool isListen) async {
+    _speech.stop();
+
+    if (!_isVoiceRecog) {
+      return;
+    }
+
+    if (isListen) {
+      bool available = await _speech.initialize(
+        debugLogging: false,
+        onStatus: (val) {
+          print('onStatus: $val');
+        },
+        onError: (val) {
+          print('onError: $val');
+          _speech.stop();
+
+          Timer(Duration(milliseconds: 50), () {
+            _listenVoice(true);
+          });
+        },
+      );
+      if (available) {
+        _speech.listen(
+          //  pauseFor: Duration(seconds: 700),
+
+          localeId: 'ko_KR',
+          onResult: (val) => setState(() {
+            _text = val.recognizedWords;
+            print(_text);
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return AlertDialog(
+                    title: Text(_text),
+                  );
+                });
+            _onChoiceBtnClicked(0);
+            _speech.stop();
+
+            Timer(Duration(milliseconds: 50), () {
+              _listenVoice(true);
+            });
+
+            if (val.hasConfidenceRating && val.confidence > 0) {
+              _confidence = val.confidence;
+            }
+          }),
+        );
+      }
+    } else {
+      _speech.stop();
+    }
+  }
+
+  void _checkVoiceResult(String text) {}
 
   Future<List<ModelQuestion>> _fromPost() async {
     List<ModelQuestion> modelQuestionList = new List<ModelQuestion>();
@@ -571,6 +693,4 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
     return questionChoiceList;
   }
-
-
 }
