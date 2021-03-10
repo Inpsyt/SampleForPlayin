@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:playinsample/constants/constant_colors.dart';
 import 'package:playinsample/models/model_answer.dart';
 import 'package:playinsample/models/model_question.dart';
 import 'package:playinsample/models/model_questionchoice.dart';
 import 'package:playinsample/screens/screen_submit.dart';
+
+import 'package:highlight_text/highlight_text.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class Post {
   dynamic questionList;
@@ -480,6 +482,22 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     });
   }
 
+  void _submit() {
+
+    showDialog(context: context, builder: (_){
+      return AlertDialog(title: Text('제출하시겠습니까?'),content: Text(''),);
+    });
+
+    _fQuestionList.then((value) {
+      //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+            return new ScreenSubmit(
+                examName, _toQuestioinChoiceList(_questionList), _psyOnlineCode);
+          }));
+    });
+  }
+
   Future<List<ModelQuestion>> _fromPost() async {
     List<ModelQuestion> modelQuestionList = new List<ModelQuestion>();
     _post = fetchPost(body);
@@ -554,14 +572,5 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     return questionChoiceList;
   }
 
-  void _submit() {
-    _fQuestionList.then((value) {
-      //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) {
-        return new ScreenSubmit(
-            examName, _toQuestioinChoiceList(_questionList), _psyOnlineCode);
-      }));
-    });
-  }
+
 }
