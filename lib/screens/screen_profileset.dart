@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:playinsample/constants/constant_colors.dart';
+import 'package:playinsample/providers/provider_appstatus.dart';
+import 'package:provider/provider.dart';
 
 class ScreenProfileSet extends StatefulWidget {
   @override
   _ScreenProfileSetState createState() => _ScreenProfileSetState();
 }
 
+
 class _ScreenProfileSetState extends State<ScreenProfileSet> {
 
-  TextEditingController textController = new TextEditingController();
+  ProviderAppStatus _providerAppStatus;
+  TextEditingController controller = TextEditingController();
 
 
 
   @override
   Widget build(BuildContext context) {
 
-    textController.text = '김남철';
+    _providerAppStatus = Provider.of<ProviderAppStatus>(context,listen: false);
+
+    controller.text = _providerAppStatus.userStatus;
+
+    print('refreshed');
+
 
     return Scaffold(
-      backgroundColor: color_charcoal_purple,
+      backgroundColor: color_charcoal_blue,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: color_charcoal_purple,
+        backgroundColor: color_charcoal_blue,
         centerTitle: true,
         title: Text('프로필 설정'),
       ),
@@ -53,11 +62,15 @@ class _ScreenProfileSetState extends State<ScreenProfileSet> {
 
 
                 SizedBox(
-                  width: 100,
-                  child: TextField(
-
+                  width: 140,
+                  child: TextField( //이름 입력 영역
+                    controller: controller,
                     textAlign: TextAlign.center,
-                    controller: textController,
+                    onChanged: (text)async {
+                      _providerAppStatus.setUserStatus(text);
+                    },
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(hintText: '이름을 입력하세요..'),
 
                   ),
                 ),

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:playinsample/constants/constant_colors.dart';
 import 'package:playinsample/models/model_exam.dart';
+import 'package:playinsample/providers/provider_appstatus.dart';
 import 'package:playinsample/providers/provider_exam.dart';
 import 'package:playinsample/screens/screen_profileset.dart';
 import 'package:playinsample/screens/screen_questionpages.dart';
 import 'package:provider/provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 
 
 class ScreenSelect extends StatelessWidget {
 
   ProviderExam _providerExam;
+  ProviderAppStatus _providerAppStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,9 @@ class ScreenSelect extends StatelessWidget {
     _providerExam = Provider.of<ProviderExam>(context,listen: false);
     _providerExam.initList();
     _providerExam.addList();
+
+    _providerAppStatus = Provider.of<ProviderAppStatus>(context,listen: true);
+
 
     Size screenSize = MediaQuery.of(context).size;
 
@@ -85,9 +89,17 @@ class ScreenSelect extends StatelessWidget {
                       SizedBox(
                         height: 13,
                       ),
-                      Text(
-                        '김남철',
-                        style: TextStyle(color: Colors.white, fontSize: 23),
+                      FutureBuilder<String>(
+                        future: _providerAppStatus.getUserStatus(),
+                        builder: (context,snapshot){
+                          if(!snapshot.hasData)
+                            return Container();
+
+                          return Text(
+                            snapshot.data,
+                            style: TextStyle(color: Colors.white, fontSize: 23),
+                          );
+                        },
                       ),
                       Text(
                         '(대학생) 만 23세',

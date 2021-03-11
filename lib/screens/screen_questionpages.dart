@@ -86,7 +86,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   double _confidence = 1.0;
   bool _isVoiceRecog = false;
 
-
   //dynamic listview 변수
   bool isMoreList = false;
   double _containerHeigh = 300;
@@ -112,6 +111,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -119,30 +120,29 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     print('ScreenSize :' + screenSize.width.toString());
     print('ScreenSize :' + screenSize.height.toString());
 
-
     return WillPopScope(
       onWillPop: () {
-        return showDialog(
+        return  showDialog(
             context: context,
             builder: (context) => new AlertDialog(
-                  title: Text('정말로 종료하시겠습니까?'),
-                  content: Text('진행중인 정보는 저장되지 않습니다.'),
-                  actions: [
-                    FlatButton(
-                      child: Text('NO'),
-                      onPressed: () {
-                        Navigator.of(context).pop(false);
-                        return;
-                      },
-                    ),
-                    FlatButton(
-                      child: Text('YES'),
-                      onPressed: () {
-                        Navigator.of(context).pop(true);
-                      },
-                    )
-                  ],
-                ));
+              title: Text('정말로 종료하시겠습니까?'),
+              content: Text('진행중인 정보는 저장되지 않습니다.'),
+              actions: [
+                FlatButton(
+                  child: Text('NO'),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                    return;
+                  },
+                ),
+                FlatButton(
+                  child: Text('YES'),
+                  onPressed: () {
+                    Navigator.pop(context,true);
+                  },
+                )
+              ],
+            ));
       },
       child: Scaffold(
           backgroundColor: color_eui_light,
@@ -153,7 +153,30 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
               icon: Icon(Icons.arrow_back),
               color: color_text_dark,
               onPressed: () {
-                Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (context) => new AlertDialog(
+                      title: Text('정말로 종료하시겠습니까?'),
+                      content: Text('진행중인 정보는 저장되지 않습니다.'),
+                      actions: [
+                        FlatButton(
+                          child: Text('NO'),
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                            return;
+                          },
+                        ),
+                        FlatButton(
+                          child: Text('YES'),
+                          onPressed: () {
+                            Navigator.pop(context,true);
+                            Navigator.pop(context,true);
+
+                          },
+                        )
+                      ],
+                    ));
+
               },
             ),
             actions: [
@@ -174,7 +197,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
             future: _fQuestionList,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-
                 return Center(
                   child: CircularProgressIndicator(),
                 );
@@ -186,13 +208,10 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 30,
-                  ),
                   Container(
                     //상단부 막대
                     padding: EdgeInsets.symmetric(
-                        horizontal: _paddingHorizontal, vertical: 10),
+                        horizontal: _paddingHorizontal, vertical: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -225,6 +244,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                          */
 
                         LinearPercentIndicator(
+
                           percent: (_currentPage + 1) /
                               _questionList.length.toDouble(),
                           backgroundColor: color_black_300,
@@ -282,7 +302,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                       children: [
                         Stack(
                           children: [
-
                             Positioned(
                               top: 0,
                               child: AnimatedContainer(
@@ -294,7 +313,9 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
                                         colors: [
-                                          isMoreList?color_trans_black_300:Colors.transparent,
+                                      isMoreList
+                                          ? color_trans_black_300
+                                          : Colors.transparent,
                                       Colors.transparent
                                     ])),
                               ),
@@ -310,19 +331,24 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
                                         colors: [
-                                          Colors.transparent,
-                                          isMoreList?color_trans_black_300:Colors.transparent,
-                                        ])),
+                                      Colors.transparent,
+                                      isMoreList
+                                          ? color_trans_black_300
+                                          : Colors.transparent,
+                                    ])),
                               ),
                             ),
                             AnimatedContainer(
                               duration: Duration(milliseconds: 500),
                               curve: Curves.linear,
                               height: _containerHeigh,
-
                               child: Center(
                                 child: ListView.separated(
-                                  physics: isMoreList?BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()):NeverScrollableScrollPhysics(),
+                                    physics: isMoreList
+                                        ? BouncingScrollPhysics(
+                                            parent:
+                                                AlwaysScrollableScrollPhysics())
+                                        : NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     separatorBuilder: (context, index) {
                                       return Padding(
@@ -340,7 +366,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                     itemBuilder: (context, index2) {
                                       return Padding(
                                         padding:
-                                        EdgeInsets.symmetric(vertical: 0),
+                                            EdgeInsets.symmetric(vertical: 0),
                                         child: ListTile(
                                           title: Padding(
                                             padding: EdgeInsets.symmetric(
@@ -349,37 +375,39 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   _questionList[_currentPage]
-                                                      .questionChoiceList[index2]
+                                                      .questionChoiceList[
+                                                          index2]
                                                       .choiceDirection
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight: _questionList[
-                                                      _currentPage]
-                                                          .questionChoiceList[
-                                                      index2]
-                                                          .isChoosen
+                                                                  _currentPage]
+                                                              .questionChoiceList[
+                                                                  index2]
+                                                              .isChoosen
                                                           ? FontWeight.bold
                                                           : FontWeight.w500,
                                                       color: _questionList[
-                                                      _currentPage]
-                                                          .questionChoiceList[
-                                                      index2]
-                                                          .isChoosen
+                                                                  _currentPage]
+                                                              .questionChoiceList[
+                                                                  index2]
+                                                              .isChoosen
                                                           ? Colors.black
                                                           : color_black_500),
                                                 ),
                                                 Icon(
                                                   Icons.check_circle,
-                                                  color:
-                                                  _questionList[_currentPage]
-                                                      .questionChoiceList[
-                                                  index2]
-                                                      .isChoosen
+                                                  color: _questionList[
+                                                              _currentPage]
+                                                          .questionChoiceList[
+                                                              index2]
+                                                          .isChoosen
                                                       ? color_charcoal_blue
                                                       : color_trans_black_300,
                                                   size: 20,
@@ -449,7 +477,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                     }),
                               ),
                             ),
-
                           ],
                         ),
                         Row(
@@ -498,23 +525,26 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     });
 
     _checkSelectedCount();
-    _nextPage();
   }
 
-  void _refreshDynamicListView(){
-    if(_questionList[_currentPage].questionChoiceList.length>5){
+  void _refreshDynamicListView() {
+    if (_questionList[_currentPage].questionChoiceList.length > 5) {
       isMoreList = true;
-      _containerHeigh = MediaQuery.of(context).size.height/2-100;
-    }else
-    {
+      _containerHeigh = MediaQuery.of(context).size.height / 2 - 100;
+    } else {
       isMoreList = false;
-      _containerHeigh =300;
+      _containerHeigh = 300;
     }
   }
 
   void _checkSelectedCount() {
     int selectedCount = 1;
 
+    if (_currentPage == _questionList.length - 1) //현재 페이지가 마지막 페이지인지 확인
+    {
+      _submit();
+      return;
+    }
     for (int j = 0; j < _questionList.length; j++) {
       for (int k = 0; k < _questionList[j].questionChoiceList.length; k++) {
         if (_questionList[j].questionChoiceList[k].isChoosen == true) {
@@ -522,14 +552,12 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
         }
       }
     }
+    _selectedCount = selectedCount;
 
-    if (selectedCount >= _questionList.length) {
-      _selectedCount = _questionList.length;
-      _submit();
-      return;
-    } else {
-      _selectedCount = selectedCount;
-    }
+
+
+
+    _nextPage();
   }
 
   void _nextPage() {
@@ -544,22 +572,38 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   }
 
   void _submit() {
-    showDialog(
+    _fQuestionList.then((value) async {
+      //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
+      await showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
             title: Text('제출하시겠습니까?'),
             content: Text(''),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                    return;
+                  },
+                  child: Text('아니요')),
+              FlatButton(
+                  onPressed: () async {
+                    Navigator.pop(context, false);
+                    await Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return new ScreenSubmit(
+                          examName,
+                          _toQuestioinChoiceList(_questionList),
+                          _psyOnlineCode);
+                    }));
+                    Navigator.pop(context, true);
+                  },
+                  child: Text('예'))
+            ],
           );
-        });
-
-    _fQuestionList.then((value) {
-      //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) {
-        return new ScreenSubmit(
-            examName, _toQuestioinChoiceList(_questionList), _psyOnlineCode);
-      }));
+        },
+      );
     });
   }
 

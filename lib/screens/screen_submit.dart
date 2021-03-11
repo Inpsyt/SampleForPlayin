@@ -93,11 +93,11 @@ class ScreenSubmit extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: color_charcoal_purple,
+      backgroundColor: color_charcoal_blue,
       appBar: AppBar(
         //상단바
         elevation: 0,
-        backgroundColor: color_charcoal_purple,
+        backgroundColor: color_charcoal_blue,
       ),
       body: Container(
         child: Center(
@@ -158,7 +158,7 @@ class ScreenSubmit extends StatelessWidget {
 
                     RaisedButton(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
-                        color: color_charcoal_purple,
+                        color: color_charcoal_blue,
                         onPressed: () {
                           _OpenOzViwer(psyOnlineCode);
                         },
