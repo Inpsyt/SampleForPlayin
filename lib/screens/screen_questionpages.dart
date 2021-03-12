@@ -71,7 +71,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   final ModelExam _modelExam;
   final bool isOnline;
 
-  final double _paddingHorizontal = 40;
+  final double _paddingHorizontal = 30;
 
   Future<List<ModelQuestion>> _fQuestionList;
   List<ModelQuestion> _questionList;
@@ -398,7 +398,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 7,
                                                       horizontal:
-                                                          _paddingHorizontal),
+                                                          _paddingHorizontal-10),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
