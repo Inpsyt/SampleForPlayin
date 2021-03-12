@@ -1,0 +1,2436 @@
+{
+  "questionList": [
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 1,
+      "reactionTitle": "우리 아이는 나와 함께 시간 보내기를 좋아한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 2,
+      "reactionTitle": "나는 아이가 해야 할 일을 쉽게 결정한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 3,
+      "reactionTitle": "아이는 내 인내심의 한계를 시험한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 4,
+      "reactionTitle": "자녀가 가족의 규칙을 따르는 것은 중요하다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 5,
+      "reactionTitle": "나는 아이의 현재 기분을 잘 알아챌 수 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 6,
+      "reactionTitle": "나는 내 양육 능력에 자신감이 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 7,
+      "reactionTitle": "자녀는 부모가 시킨 일을 반드시 해야 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 8,
+      "reactionTitle": "나는 아이와 게임이나 놀이를 하며 함께 논다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 9,
+      "reactionTitle": "나는 아이의 잘못에 대해 지나치게 반응한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 10,
+      "reactionTitle": "나는 아이와 함께 시간 보내기를 좋아한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 11,
+      "reactionTitle": "나와 아이는 야외 활동을 함께 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 12,
+      "reactionTitle": "부모 노릇을 하기란 어렵다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 13,
+      "reactionTitle": "우리 아이는 속상할 때 나에게 위로를 구한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 14,
+      "reactionTitle": "나는 아이에게 책을 읽어준다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 15,
+      "reactionTitle": "나는 아이에게 집안 규율 지키기를 강조한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 16,
+      "reactionTitle": "나는 아이가 혼자 있고 싶어 할 때를 잘 안다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 17,
+      "reactionTitle": "나는 아이와 함께 외출을 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 18,
+      "reactionTitle": "나는 아이가 잘못했을 때 혼낸다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 19,
+      "reactionTitle": "나는 아이 다루기가 벅차다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 20,
+      "reactionTitle": "나는 아이가 언제 속상해하는지를 안다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 21,
+      "reactionTitle": "나는 아이를 양육할 때 올바른 결정을 내릴 수 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 22,
+      "reactionTitle": "나는 아이에게 새로운 게임(놀이) 방법을 가르친다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 23,
+      "reactionTitle": "우리 가족은 모여서 저녁을 같이 먹는다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 24,
+      "reactionTitle": "나는 아이를 진정시키려면 어떤 말을 해야 할지 알고 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 25,
+      "reactionTitle": "우리 아이는 집안 규율을 잘 알고 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 26,
+      "reactionTitle": "나는 아이를 다룰때 실수를 많이 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 27,
+      "reactionTitle": "나는 아이가 어른을 공경하지 않으면 혼낸다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 28,
+      "reactionTitle": "나는 아이가 무슨 생각을 하는지 안다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 29,
+      "reactionTitle": "나는 집안을 잘 통제하고 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 30,
+      "reactionTitle": "나는 아이가 어른에게 말대답을 하면 야단친다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 31,
+      "reactionTitle": "나와 우리 아이는 과제를 함께 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 32,
+      "reactionTitle": "작년 한 해 동안 나는 아이를 키우는 게 어려웠다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 33,
+      "reactionTitle": "나는 아이가 흥분했을 때 진정시킬 수 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 34,
+      "reactionTitle": "나와 아이는 함께 산책을 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 35,
+      "reactionTitle": "나는 아이를 다루는 데 한계를 느낀다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 36,
+      "reactionTitle": "자녀의 모든 잘못을 혼내는 것이 부모인 나의 책임이다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 37,
+      "reactionTitle": "나와 아이는 일을 함께 계획해서 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 38,
+      "reactionTitle": "나는 아이가 다른 사람을 존중하는 법을 가르치기 위해 혼낸다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 39,
+      "reactionTitle": "나는 아이가 대부분의 상황에서 어떻게 반응할지 알고 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 40,
+      "reactionTitle": "나는 아이의 잘못을 다룰 때 평정심을 유지한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 41,
+      "reactionTitle": "나는 아이가 다른 사람의 물건을 망가뜨리면 혼낸다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 42,
+      "reactionTitle": "나는 아이에게 이성을 잃을 정도로 화를 낸다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 43,
+      "reactionTitle": "나는 아이가 어떻게 느끼는지 안다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 44,
+      "reactionTitle": "나는 아이를 다루는 데 필요한 에너지가 있다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 45,
+      "reactionTitle": "나는 아이와 같이 미술 및 공예 활동을 한다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    }
+  ],
+  "lowScaleList": [
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 1,
+      "questionNo": 1
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 2,
+      "questionNo": 2
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 3,
+      "questionNo": 3
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 4,
+      "questionNo": 4
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 5,
+      "questionNo": 5
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 6,
+      "questionNo": 6
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 7,
+      "questionNo": 7
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 8,
+      "questionNo": 8
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 9,
+      "questionNo": 9
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 10,
+      "questionNo": 10
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 11,
+      "questionNo": 11
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 12,
+      "questionNo": 12
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 13,
+      "questionNo": 13
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "A01",
+      "scaleManageNo": 14,
+      "questionNo": 14
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 15,
+      "questionNo": 15
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 16,
+      "questionNo": 16
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 17,
+      "questionNo": 17
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 18,
+      "questionNo": 18
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 19,
+      "questionNo": 19
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 20,
+      "questionNo": 20
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 21,
+      "questionNo": 21
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 22,
+      "questionNo": 22
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "A01",
+      "scaleManageNo": 23,
+      "questionNo": 23
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 24,
+      "questionNo": 24
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 25,
+      "questionNo": 25
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 26,
+      "questionNo": 26
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 27,
+      "questionNo": 27
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 28,
+      "questionNo": 28
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 29,
+      "questionNo": 29
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 30,
+      "questionNo": 30
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 31,
+      "questionNo": 31
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 32,
+      "questionNo": 32
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 33,
+      "questionNo": 33
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 34,
+      "questionNo": 34
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 35,
+      "questionNo": 35
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 36,
+      "questionNo": 36
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 37,
+      "questionNo": 37
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 38,
+      "questionNo": 38
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 39,
+      "questionNo": 39
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 40,
+      "questionNo": 40
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "DIS",
+      "scaleManageNo": 41,
+      "questionNo": 41
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "RF",
+      "scaleManageNo": 42,
+      "questionNo": 42
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "ATT",
+      "scaleManageNo": 43,
+      "questionNo": 43
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "PC",
+      "scaleManageNo": 44,
+      "questionNo": 44
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "lowScaleCode": "INV",
+      "scaleManageNo": 45,
+      "questionNo": 45
+    }
+  ]
+}

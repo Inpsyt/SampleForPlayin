@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:playinsample/constants/constant_colors.dart';
 import 'package:playinsample/models/model_answer.dart';
+import 'package:playinsample/models/model_exam.dart';
 import 'package:playinsample/models/model_question.dart';
 import 'package:playinsample/models/model_questionchoice.dart';
 import 'package:playinsample/screens/screen_submit.dart';
@@ -42,7 +45,7 @@ Future<Post> fetchPost(var body) async {
   if (response.statusCode == 200) {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
 
-    print('성공');
+    print('ScreenQuestionPages : 성공 200 ');
 
     return Post.fromJson(json.decode(response.body));
     //throw response.body; //바디의 글자를 전부 출력
@@ -53,19 +56,20 @@ Future<Post> fetchPost(var body) async {
 }
 
 class ScreenQuestionPages extends StatefulWidget {
-  final body;
-  final String examName;
+  final ModelExam _modelExam;
 
-  ScreenQuestionPages(this.body, this.examName);
+  final bool isOnline;
+
+  ScreenQuestionPages(this._modelExam, this.isOnline);
 
   @override
   _ScreenQuestionPagesState createState() =>
-      _ScreenQuestionPagesState(this.body, this.examName);
+      _ScreenQuestionPagesState(this._modelExam, this.isOnline);
 }
 
 class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
-  final body;
-  final String examName;
+  final ModelExam _modelExam;
+  final bool isOnline;
 
   final double _paddingHorizontal = 40;
 
@@ -87,22 +91,32 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   bool _isVoiceRecog = false;
 
   //dynamic listview 변수
-  bool isMoreList = false;
-  double _containerHeigh = 300;
+  bool isMoreList = true;
+  double _containerHeigh = 0;
+  bool isShowing = false;
 
-  _ScreenQuestionPagesState(this.body, this.examName);
+  //animation effect
+  FadeInController topFadeController = FadeInController(autoStart: false);
+  FadeInController middleFadeController = FadeInController(autoStart: false);
+  FadeInController bottomFadeController = FadeInController(autoStart: false);
+
+  _ScreenQuestionPagesState(this._modelExam, this.isOnline);
 
   @override
   void initState() {
     // TODO: implement initState
 
-    _fQuestionList = _fromPost(); //Post로부터 받은 json을 List화로 만들어줌
-
-    _post.then((value) {
-      //중요한 코드 저장
-      _psyOnlineCode = value.psyOnlineCode.toString();
-      print('psyOnlineCoce : ' + _psyOnlineCode);
-    });
+    if (isOnline) {
+      _fQuestionList = _fromPost(); //Post로부터 받은 json을 List화로 만들어줌
+      _post.then((value) {
+        //중요한 코드 저장
+        _psyOnlineCode = value.psyOnlineCode.toString();
+        print('psyOnlineCode : ' + _psyOnlineCode);
+      });
+    } else {
+      _fQuestionList = _fromJson();
+      _psyOnlineCode = "97912a1edf07469c9733";
+    }
 
     _speech = stt.SpeechToText();
 
@@ -111,38 +125,36 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    print('ScreenSize :' + screenSize.width.toString());
-    print('ScreenSize :' + screenSize.height.toString());
+    //print('ScreenSize :' + screenSize.width.toString());
+    // print('ScreenSize :' + screenSize.height.toString());
 
     return WillPopScope(
       onWillPop: () {
-        return  showDialog(
+        return showDialog(
             context: context,
             builder: (context) => new AlertDialog(
-              title: Text('정말로 종료하시겠습니까?'),
-              content: Text('진행중인 정보는 저장되지 않습니다.'),
-              actions: [
-                FlatButton(
-                  child: Text('NO'),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                    return;
-                  },
-                ),
-                FlatButton(
-                  child: Text('YES'),
-                  onPressed: () {
-                    Navigator.pop(context,true);
-                  },
-                )
-              ],
-            ));
+                  title: Text('정말로 종료하시겠습니까?'),
+                  content: Text('진행중인 정보는 저장되지 않습니다.'),
+                  actions: [
+                    FlatButton(
+                      child: Text('NO'),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                        return;
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('YES'),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    )
+                  ],
+                ));
       },
       child: Scaffold(
           backgroundColor: color_eui_light,
@@ -156,27 +168,25 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                 showDialog(
                     context: context,
                     builder: (context) => new AlertDialog(
-                      title: Text('정말로 종료하시겠습니까?'),
-                      content: Text('진행중인 정보는 저장되지 않습니다.'),
-                      actions: [
-                        FlatButton(
-                          child: Text('NO'),
-                          onPressed: () {
-                            Navigator.of(context).pop(false);
-                            return;
-                          },
-                        ),
-                        FlatButton(
-                          child: Text('YES'),
-                          onPressed: () {
-                            Navigator.pop(context,true);
-                            Navigator.pop(context,true);
-
-                          },
-                        )
-                      ],
-                    ));
-
+                          title: Text('정말로 종료하시겠습니까?'),
+                          content: Text('진행중인 정보는 저장되지 않습니다.'),
+                          actions: [
+                            FlatButton(
+                              child: Text('NO'),
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                                return;
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('YES'),
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              },
+                            )
+                          ],
+                        ));
               },
             ),
             actions: [
@@ -194,318 +204,340 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
             ],
           ),
           body: FutureBuilder<List<ModelQuestion>>(
-            future: _fQuestionList,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+              future: _fQuestionList,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  print("데이터가 로드됨.");
 
-              _questionList = snapshot.data;
-              _refreshDynamicListView();
-              return Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    //상단부 막대
-                    padding: EdgeInsets.symmetric(
-                        horizontal: _paddingHorizontal, vertical: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(width: double.infinity),
-
-                        /*
-                        SliderTheme(
-                          data: SliderThemeData(
-                            thumbColor: Colors.transparent,
-                          ),
-                          child: Slider(
-
-                            activeColor: color_charcoal_blue,
-                            inactiveColor: color_black_300,
-                            value: _currentPage.toDouble(),
-                            min: 0,
-                            max: _questionList.length.toDouble() - 1,
-                            //divisions: _questionList.length, //이상한 점박이들 생김
-                            label: (_currentPage.round() + 1).toString(),
+                  _questionList = snapshot.data;
+                  _refreshDynamicListView();
 
 
-                            onChanged: (double value) {
-                              setState(() {
-                                _currentPage = value.toInt();
-                                _pageController.jumpToPage(_currentPage);
-                              });
-                            },
-                          ),
-                        )
-                         */
 
-                        LinearPercentIndicator(
-
-                          percent: (_currentPage + 1) /
-                              _questionList.length.toDouble(),
-                          backgroundColor: color_black_300,
-                          progressColor: color_charcoal_blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    //상단부 문항 슬라이더
-                    child: PageView.builder(
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                            _refreshDynamicListView();
-                          });
-                        },
-                        controller: _pageController,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: _selectedCount,
-                        itemBuilder: (context, index) {
-                          return Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: _paddingHorizontal),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      _questionList[index]
-                                          .reactionTitle
-                                          .toString(),
-                                      style: TextStyle(
-                                          color: color_text_dark,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                  Container(
-                    //하단부 선택영역
-                    height: screenSize.height / 2,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Stack(
+                  return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        //상단부 막대
+                        padding: EdgeInsets.symmetric(
+                            horizontal: _paddingHorizontal, vertical: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Positioned(
-                              top: 0,
-                              child: AnimatedContainer(
-                                duration: Duration(milliseconds: 500),
-                                width: 10000,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                      isMoreList
-                                          ? color_trans_black_300
-                                          : Colors.transparent,
-                                      Colors.transparent
-                                    ])),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              child: AnimatedContainer(
-                                duration: Duration(milliseconds: 500),
-                                width: 1000,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                      Colors.transparent,
-                                      isMoreList
-                                          ? color_trans_black_300
-                                          : Colors.transparent,
-                                    ])),
-                              ),
-                            ),
-                            AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.linear,
-                              height: _containerHeigh,
-                              child: Center(
-                                child: ListView.separated(
-                                    physics: isMoreList
-                                        ? BouncingScrollPhysics(
-                                            parent:
-                                                AlwaysScrollableScrollPhysics())
-                                        : NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    separatorBuilder: (context, index) {
-                                      return Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: _paddingHorizontal),
-                                        child: Container(
-                                          height: 1,
-                                          color: color_trans_black_300,
-                                        ),
-                                      );
-                                    },
-                                    itemCount: _questionList[_currentPage]
-                                        .questionChoiceList
-                                        .length,
-                                    itemBuilder: (context, index2) {
-                                      return Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 0),
-                                        child: ListTile(
-                                          title: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 7,
-                                                horizontal: _paddingHorizontal),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  _questionList[_currentPage]
-                                                      .questionChoiceList[
-                                                          index2]
-                                                      .choiceDirection
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight: _questionList[
-                                                                  _currentPage]
-                                                              .questionChoiceList[
-                                                                  index2]
-                                                              .isChoosen
-                                                          ? FontWeight.bold
-                                                          : FontWeight.w500,
-                                                      color: _questionList[
-                                                                  _currentPage]
-                                                              .questionChoiceList[
-                                                                  index2]
-                                                              .isChoosen
-                                                          ? Colors.black
-                                                          : color_black_500),
-                                                ),
-                                                Icon(
-                                                  Icons.check_circle,
-                                                  color: _questionList[
-                                                              _currentPage]
-                                                          .questionChoiceList[
-                                                              index2]
-                                                          .isChoosen
-                                                      ? color_charcoal_blue
-                                                      : color_trans_black_300,
-                                                  size: 20,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          onTap: () =>
-                                              _onChoiceBtnClicked(index2),
-                                        ),
+                            SizedBox(width: double.infinity),
 
-                                        /*
-                                    FlatButton(
-                                        highlightColor: color_charcoal_purple,
-                                        splashColor: color_charcoal_purple,
-                                        focusColor: color_charcoal_purple,
-                                        color: _questionList[_currentPage]
-                                                .questionChoiceList[index2]
-                                                .isChoosen
-                                            ? color_charcoal_purple
-                                            : Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                            side: BorderSide(color: color_black_600),
-                                            borderRadius: BorderRadius.circular(10)),
-                                        onPressed: () {
-                                          for (int i = 0;
-                                              i <
-                                                  _questionList[_currentPage]
-                                                      .questionChoiceList
-                                                      .length;
-                                              i++) {
-                                            _questionList[_currentPage]
-                                                .questionChoiceList[i]
-                                                .isChoosen = false;
-                                          }
-                                          setState(() {
-                                            _questionList[_currentPage]
-                                                .questionChoiceList[index2]
-                                                .isChoosen = true;
-                                          });
+                            /*
+                      SliderTheme(
+                        data: SliderThemeData(
+                          thumbColor: Colors.transparent,
+                        ),
+                        child: Slider(
 
-                                          _pageController.nextPage(
-                                              duration: Duration(milliseconds: 200),
-                                              curve: Curves.decelerate);
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 7),
-                                          child: Text(
-                                            _questionList[_currentPage]
-                                                .questionChoiceList[index2]
-                                                .choiceDirection
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: _questionList[_currentPage]
-                                                        .questionChoiceList[index2]
-                                                        .isChoosen
-                                                    ? Colors.white
-                                                    : color_black_500),
-                                          ),
-                                        )),
+                          activeColor: color_charcoal_blue,
+                          inactiveColor: color_black_300,
+                          value: _currentPage.toDouble(),
+                          min: 0,
+                          max: _questionList.length.toDouble() - 1,
+                          //divisions: _questionList.length, //이상한 점박이들 생김
+                          label: (_currentPage.round() + 1).toString(),
 
 
-                                    */
-                                      );
-                                    }),
+                          onChanged: (double value) {
+                            setState(() {
+                              _currentPage = value.toInt();
+                              _pageController.jumpToPage(_currentPage);
+                            });
+                          },
+                        ),
+                      )
+                       */
+
+                            FadeIn(
+                              controller: topFadeController,
+                              duration: Duration(milliseconds: 1000),
+                              child: LinearPercentIndicator(
+                                percent: (_currentPage + 1) /
+                                    _questionList.length.toDouble(),
+                                backgroundColor: color_black_300,
+                                progressColor: color_charcoal_blue,
                               ),
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CupertinoSwitch(
-                              value: _isVoiceRecog,
-                              onChanged: (isChecked) {
+                      ),
+                      Expanded(
+                        //상단부 문항 슬라이더
+                        child: FadeIn(
+                          controller: middleFadeController,
+                          duration: Duration(milliseconds: 1000),
+                          child: PageView.builder(
+                              onPageChanged: (index) {
                                 setState(() {
-                                  _isVoiceRecog = !_isVoiceRecog;
+                                  _currentPage = index;
+                                  _refreshDynamicListView(); //리스트뷰 크기 재조정
+                                  _speech.stop();
                                   _listenVoice(true);
                                 });
                               },
-                              activeColor: color_charcoal_blue,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text('음성으로도 응답할 수 있어요')
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              );
-            },
-          )),
+                              controller: _pageController,
+                              physics: BouncingScrollPhysics(),
+                              itemCount: _selectedCount,
+                              itemBuilder: (context, index) {
+                                return Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: _paddingHorizontal),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            _questionList[index]
+                                                .reactionTitle
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: color_text_dark,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ),
+                      Container(
+                        //하단부 선택영역
+                        height: screenSize.height / 2,
+                        child: FadeIn(
+                          controller: bottomFadeController,
+                          duration: Duration(milliseconds: 1000),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Stack(
+                                children: [
+                                  Positioned(
+                                    top: 0,
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 500),
+                                      width: 10000,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                            isMoreList
+                                                ? color_trans_black_300
+                                                : Colors.transparent,
+                                            Colors.transparent
+                                          ])),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 500),
+                                      width: 1000,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                            Colors.transparent,
+                                            isMoreList
+                                                ? color_trans_black_300
+                                                : Colors.transparent,
+                                          ])),
+                                    ),
+                                  ),
+                                  AnimatedContainer(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.linear,
+                                    height: _containerHeigh,
+                                    child: Center(
+                                      child: ListView.separated(
+                                          physics: isMoreList
+                                              ? BouncingScrollPhysics(
+                                                  parent:
+                                                      AlwaysScrollableScrollPhysics())
+                                              : NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          separatorBuilder: (context, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: _paddingHorizontal),
+                                              child: Container(
+                                                height: 1,
+                                                color: color_trans_black_300,
+                                              ),
+                                            );
+                                          },
+                                          itemCount: _questionList[_currentPage]
+                                              .questionChoiceList
+                                              .length,
+                                          itemBuilder: (context, index2) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 0),
+                                              child: ListTile(
+                                                title: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 7,
+                                                      horizontal:
+                                                          _paddingHorizontal),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        (index2 + 1).toString() +
+                                                            '. ' +
+                                                            _questionList[
+                                                                    _currentPage]
+                                                                .questionChoiceList[
+                                                                    index2]
+                                                                .choiceDirection
+                                                                .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight: _questionList[
+                                                                        _currentPage]
+                                                                    .questionChoiceList[
+                                                                        index2]
+                                                                    .isChoosen
+                                                                ? FontWeight.bold
+                                                                : FontWeight.w500,
+                                                            color: _questionList[
+                                                                        _currentPage]
+                                                                    .questionChoiceList[
+                                                                        index2]
+                                                                    .isChoosen
+                                                                ? Colors.black
+                                                                : color_black_500),
+                                                      ),
+                                                      Icon(
+                                                        Icons.check_circle,
+                                                        color: _questionList[
+                                                                    _currentPage]
+                                                                .questionChoiceList[
+                                                                    index2]
+                                                                .isChoosen
+                                                            ? color_charcoal_blue
+                                                            : color_trans_black_300,
+                                                        size: 20,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                onTap: () =>
+                                                    _onChoiceBtnClicked(index2),
+                                              ),
+
+                                              /*
+                                      FlatButton(
+                                          highlightColor: color_charcoal_purple,
+                                          splashColor: color_charcoal_purple,
+                                          focusColor: color_charcoal_purple,
+                                          color: _questionList[_currentPage]
+                                                  .questionChoiceList[index2]
+                                                  .isChoosen
+                                              ? color_charcoal_purple
+                                              : Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              side: BorderSide(color: color_black_600),
+                                              borderRadius: BorderRadius.circular(10)),
+                                          onPressed: () {
+                                            for (int i = 0;
+                                                i <
+                                                    _questionList[_currentPage]
+                                                        .questionChoiceList
+                                                        .length;
+                                                i++) {
+                                              _questionList[_currentPage]
+                                                  .questionChoiceList[i]
+                                                  .isChoosen = false;
+                                            }
+                                            setState(() {
+                                              _questionList[_currentPage]
+                                                  .questionChoiceList[index2]
+                                                  .isChoosen = true;
+                                            });
+
+                                            _pageController.nextPage(
+                                                duration: Duration(milliseconds: 200),
+                                                curve: Curves.decelerate);
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 7),
+                                            child: Text(
+                                              _questionList[_currentPage]
+                                                  .questionChoiceList[index2]
+                                                  .choiceDirection
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: _questionList[_currentPage]
+                                                          .questionChoiceList[index2]
+                                                          .isChoosen
+                                                      ? Colors.white
+                                                      : color_black_500),
+                                            ),
+                                          )),
+
+
+                                      */
+                                            );
+                                          }),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CupertinoSwitch(
+                                    value: _isVoiceRecog,
+                                    onChanged: (isChecked) {
+                                      setState(() {
+                                        _isVoiceRecog = !_isVoiceRecog;
+                                      });
+                                      _listenVoice(true);
+                                    },
+                                    activeColor: color_charcoal_blue,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text('음성으로도 응답할 수 있어요')
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                }
+              })),
     );
   }
 
@@ -535,6 +567,33 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       isMoreList = false;
       _containerHeigh = 300;
     }
+
+    if (!isShowing) { //화면 로드된 후 한번만 실행
+      isShowing = true;
+      isMoreList = true;
+      _containerHeigh = 0;
+
+
+      Timer(Duration(milliseconds: 600), () {
+        middleFadeController.fadeIn();
+
+      });
+      Timer(Duration(milliseconds: 1600), () {
+        topFadeController.fadeIn();
+
+      });
+
+
+
+      Timer(Duration(milliseconds: 2600), () {
+        bottomFadeController.fadeIn();
+
+      });
+      Timer(Duration(milliseconds: 4000), () {
+        setState(() {});
+
+      });
+    }
   }
 
   void _checkSelectedCount() {
@@ -553,9 +612,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       }
     }
     _selectedCount = selectedCount;
-
-
-
 
     _nextPage();
   }
@@ -593,7 +649,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                     await Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (BuildContext context) {
                       return new ScreenSubmit(
-                          examName,
+                          _modelExam.name,
                           _toQuestioinChoiceList(_questionList),
                           _psyOnlineCode);
                     }));
@@ -634,40 +690,64 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
           //  pauseFor: Duration(seconds: 700),
 
           localeId: 'ko_KR',
-          onResult: (val) => setState(() {
+          onResult: (val) {
             _text = val.recognizedWords;
-            print(_text);
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return AlertDialog(
-                    title: Text(_text),
-                  );
-                });
-            _onChoiceBtnClicked(0);
-            _speech.stop();
 
-            Timer(Duration(milliseconds: 50), () {
-              _listenVoice(true);
-            });
+            _checkVoiceResult(_text);
 
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
             }
-          }),
+          },
         );
       }
-    } else {
-      _speech.stop();
     }
   }
 
-  void _checkVoiceResult(String text) {}
+  void _checkVoiceResult(String text) {
+    print(text);
+
+    if (text.trim().contains('1') || text.trim().contains('일')) {
+      _onChoiceBtnClicked(0);
+      _speech.stop();
+    } else if (text.trim().contains('2') || text.trim().contains('이')) {
+      _onChoiceBtnClicked(1);
+      _speech.stop();
+    } else if (text.trim().contains('3') || text.trim().contains('삼')) {
+      _onChoiceBtnClicked(2);
+      _speech.stop();
+    } else if (text.trim().contains('4') || text.trim().contains('사')) {
+      _onChoiceBtnClicked(3);
+      _speech.stop();
+    } else if (text.trim().contains('5') || text.trim().contains('오')) {
+      _onChoiceBtnClicked(4);
+      _speech.stop();
+    } else if (text.trim().contains('6') || text.trim().contains('육')) {
+      _onChoiceBtnClicked(5);
+      _speech.stop();
+    } else if (text.trim().contains('7') || text.trim().contains('칠')) {
+      _onChoiceBtnClicked(6);
+      _speech.stop();
+    } else if (text.trim().contains('8') || text.trim().contains('팔')) {
+      _onChoiceBtnClicked(7);
+      _speech.stop();
+    } else if (text.trim().contains('9') || text.trim().contains('구')) {
+      _onChoiceBtnClicked(8);
+      _speech.stop();
+    }
+    // else{
+    //   Timer(Duration(seconds: 3),()
+    //   {
+    //     _speech.stop();
+    //     _listenVoice(true);
+    //   });
+    // }
+  }
 
   Future<List<ModelQuestion>> _fromPost() async {
-    List<ModelQuestion> modelQuestionList = new List<ModelQuestion>();
-    _post = fetchPost(body);
+    _post = fetchPost(_modelExam.body);
 
+    List<ModelQuestion> modelQuestionList = new List<ModelQuestion>();
     //여기서 해당 쓰레드가 끝날때까지 기다려줘야 fromPost에 값이 return되는 것이고 그래야 futureBuilder에서 데이터를 감지하는 것
     await _post.then((value) {
       //문항에 대한 리스트화
@@ -699,6 +779,44 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
         modelQuestionList.add(modelQuestion);
       }
     });
+
+    return modelQuestionList;
+  }
+
+  Future<List<ModelQuestion>> _fromJson() async {
+    String data =
+        await rootBundle.loadString('assets/jsons/exam/${_modelExam.testJson}');
+    final jsonResult = json.decode(data);
+
+    List<ModelQuestion> modelQuestionList = new List<ModelQuestion>();
+
+    for (int i = 0; i < jsonResult["questionList"].length; i++) {
+      ModelQuestion modelQuestion = new ModelQuestion(); //리스트 하나의 아이템
+      final questionItem = jsonResult["questionList"][i]; //원본의 하나 아이템
+
+      modelQuestion.questionNo = questionItem['questionNo']; //각각 대입
+      modelQuestion.reactionTitle = questionItem['reactionTitle'];
+      modelQuestion.questionChoiceList = new List<ModelAnswer>();
+
+      //print(questionItem['reactionTitle']);
+
+      //답변에 대한 리스트화
+      for (int j = 0; j < questionItem['questionChoiceList'].length; j++) {
+        ModelAnswer modelAnswer = new ModelAnswer();
+        final answerItem = questionItem['questionChoiceList'][j];
+
+        modelAnswer.choiceNo = answerItem['choiceNo']; //마찬가지로 각각 대입
+        modelAnswer.choiceScore = answerItem['choiceScore'];
+        modelAnswer.choiceDirection = answerItem['choiceDirection'];
+        modelAnswer.isChoosen = false;
+
+        //print(answerItem['choiceDirection']);
+
+        modelQuestion.questionChoiceList.add(modelAnswer);
+      }
+
+      modelQuestionList.add(modelQuestion);
+    }
 
     return modelQuestionList;
   }

@@ -14,16 +14,22 @@ class ScreenSelect extends StatelessWidget {
   ProviderExam _providerExam;
   ProviderAppStatus _providerAppStatus;
 
+  PageController _pageController;
+
   @override
   Widget build(BuildContext context) {
+    print('ScreenSelect : 빌드 새로고침');
 
 
 
     _providerExam = Provider.of<ProviderExam>(context,listen: false);
-    _providerExam.initList();
-    _providerExam.addList();
+
+    _providerExam.setOnlineList();
+    _providerExam.setOfflineList();
 
     _providerAppStatus = Provider.of<ProviderAppStatus>(context,listen: true);
+
+    _pageController = PageController(initialPage: _providerExam.getBottomBarPage(),);
 
 
     Size screenSize = MediaQuery.of(context).size;
@@ -33,6 +39,35 @@ class ScreenSelect extends StatelessWidget {
           onPressed: () {},
           backgroundColor: color_charcoal_blue,
           child: Icon(Icons.cloud_download_rounded),
+        ),
+
+        bottomNavigationBar:
+
+        Consumer<ProviderExam>(
+          builder: (context,provider,child){
+            return  BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: color_charcoal_blue,
+              currentIndex: provider.getBottomBarPage(),
+              onTap: (index){
+                if(index>_providerExam.getBottomBarPage()){
+                  _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.decelerate);
+                }else if(index<_providerExam.getBottomBarPage()){
+                  _pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.decelerate);
+                }
+                _providerExam.setBottomBarPage(index);
+
+              },
+              items: [
+                BottomNavigationBarItem(
+                    title: Text('온라인 검사'),
+                    icon: Icon(Icons.online_prediction_outlined)),
+                BottomNavigationBarItem(
+                    title: Text('오프라인 검사'),
+                    icon: Icon(Icons.all_inbox_sharp)),
+              ],
+            );
+          },
         ),
         backgroundColor: color_silver_white,
         appBar: AppBar(
@@ -57,7 +92,7 @@ class ScreenSelect extends StatelessWidget {
           children: [
             Container(
                 //상단부 영역
-                height: screenSize.height / 3.5,
+                height: screenSize.height / 4.3,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -66,6 +101,7 @@ class ScreenSelect extends StatelessWidget {
                         offset: Offset(0.1, 0.9))
                   ],
                   color: color_charcoal_blue,
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
                 ),
                 child: Center(
                   child: Column(
@@ -112,16 +148,37 @@ class ScreenSelect extends StatelessWidget {
                   ),
                 )),
             Expanded(
-              child: ListView.builder(
-                  physics: BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                  itemCount: _providerExam.getList().length,
-                  itemBuilder: (context, index) {
-                    ModelExam modelExam = _providerExam.getList()[index];
+              child:
 
-                    return _listItem(context, modelExam);
-                  }),
+              PageView(
+                onPageChanged: (index){
+                  _providerExam.setBottomBarPage(index);
+                },
+                controller: _pageController,
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ListView.builder(
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      itemCount: _providerExam.getOnlineList().length,
+                      itemBuilder: (context, index) {
+                        ModelExam modelExam = _providerExam.getOnlineList()[index];
+
+                        return _listItem(context, modelExam);
+                      }),
+                  ListView.builder(
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      itemCount: _providerExam.getOfflineList().length,
+                      itemBuilder: (context, index) {
+                        ModelExam modelExam = _providerExam.getOfflineList()[index];
+
+                        return _listItem(context, modelExam);
+                      }),
+                ],
+              ),
             ),
           ],
         ));
@@ -138,7 +195,7 @@ class ScreenSelect extends StatelessWidget {
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
-            return ScreenQuestionPages(modelExam.body, modelExam.name);
+            return ScreenQuestionPages(modelExam,_providerExam.getBottomBarPage()==0?true:false);
           }));
         },
         child: Padding(

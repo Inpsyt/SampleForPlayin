@@ -1,0 +1,243 @@
+{
+  "questionList": [
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 1,
+      "reactionTitle": "이 문항은 테스트를 위해 만든 문항입니다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "예",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "아니요",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 2,
+      "reactionTitle": "글자가 많아졌을 경우 이러한 모습으로 표시됩니다.글자가 많아졌을 경우 이러한 모습으로 표시됩니다.글자가 많아졌을 경우 이러한 모습으로 표시됩니다.글자가 많아졌을 경우 이러한 모습으로 표시됩니다.글자가 많아졌을 경우 이러한 모습으로 표시됩니다.",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 3,
+      "reactionTitle": "답안 테스트1",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "정말로 사랑한담 기다려 주세요. 사랑한단 그 말들로. 당신의 행복 하나 진심만을 원하죠.",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "사랑한단 말로는 사랑할 순 없군",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": ".",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "상처를 치료해줄 사람어디 없나, 가만히 놔두다간 끊임없이 덧나, 사랑도 사람도 너무나도 겁나, 혼자인게 무서워 난 잊혀질까 두려워보(여기서 줄바꿈)\n언제나 외톨이 맘의 문을 닫고 슬픔에 등에지고 살아가는 바보",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    },
+    {
+      "psyItemId": "KPRQ_CO_PG_P",
+      "psyItemVer": "V1.0",
+      "subPsyItemId": "00240083",
+      "questionNo": 4,
+      "reactionTitle": "답안테스트2",
+      "imgFilePath": "",
+      "mediaFilePath": "",
+      "minScore": 0,
+      "maxScore": 3,
+      "noScaleYn": "N",
+      "limitTime": 0,
+      "questionChoiceList": [
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 0,
+          "choiceDirection": "전혀 아니다",
+          "choiceScore": 0,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 1,
+          "choiceDirection": "가끔 그렇다",
+          "choiceScore": 1,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 2,
+          "choiceDirection": "자주 그렇다",
+          "choiceScore": 2,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        },
+        {
+          "questionNo": 0,
+          "choiceNo": 3,
+          "choiceDirection": "항상 그렇다",
+          "choiceScore": 3,
+          "imgFilePath": "",
+          "mediaFilePath": ""
+        }
+      ]
+    }
+
+
+  ]
+
+}
