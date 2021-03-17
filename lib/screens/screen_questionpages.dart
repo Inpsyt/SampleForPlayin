@@ -85,6 +85,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   int _selectedCount = 1;
+  bool _isPageChanging = false; 
 
   //voice recognition 관련 변수
   stt.SpeechToText _speech;
@@ -97,7 +98,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   double _containerHeigh = 0;
   bool isShowing = false;
   ProviderScrollAnimation _providerScrollAnimation;
-  //int _scrollPosition = -1; // -1일경우 상단, 0은 중앙, 1은 하단에 위치해있는 상태
   ScrollController _scrollController = ScrollController();
 
   //animation effect
@@ -376,48 +376,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                         children: [
                                           Stack(
                                             children: [
-                                              Positioned( //상단부분 그림자
-                                                top: 0,
-                                                child: AnimatedContainer(
-                                                  duration:
-                                                  Duration(milliseconds: 200),
-                                                  width: 10000,
-                                                  height: isMoreList?30:0,
-                                                  decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
-                                                          begin:
-                                                          Alignment.topCenter,
-                                                          end: Alignment
-                                                              .bottomCenter,
-                                                          colors: [
-                                                            provider.getScrollPosition()>-1
-                                                                ? color_trans_black_300
-                                                                : Colors.transparent,
-                                                            Colors.transparent
-                                                          ])),
-                                                ),
-                                              ),
-                                              Positioned( //하단부분 그림자
-                                                bottom: 0,
-                                                child: AnimatedContainer(
-                                                  duration:
-                                                  Duration(milliseconds: 200),
-                                                  width: 1000,
-                                                  height: isMoreList?30:0,
-                                                  decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
-                                                          begin:
-                                                          Alignment.topCenter,
-                                                          end: Alignment
-                                                              .bottomCenter,
-                                                          colors: [
-                                                            Colors.transparent,
-                                                            provider.getScrollPosition()<1
-                                                                ? color_trans_black_300
-                                                                : Colors.transparent,
-                                                          ])),
-                                                ),
-                                              ),
                                               AnimatedContainer(
                                                 duration:
                                                 Duration(milliseconds: 500),
@@ -441,7 +399,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                           child: Container(
                                                             height: 1,
                                                             color:
-                                                            color_trans_black_300,
+                                                            color_trans22_black_300,
                                                           ),
                                                         );
                                                       },
@@ -451,11 +409,19 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                           .length,
                                                       itemBuilder:
                                                           (context, index2) {
+
+                                                        bool isChoosen = _questionList[
+                                                        _currentPage]
+                                                            .questionChoiceList[
+                                                        index2]
+                                                            .isChoosen;
+
                                                         return Padding(
                                                           padding:
                                                           EdgeInsets.symmetric(
                                                               vertical: 0),
                                                           child: ListTile(
+                                                            tileColor: isChoosen?color_charcoal_blue:Colors.transparent,
                                                             title: Padding(
                                                               padding: EdgeInsets
                                                                   .symmetric(
@@ -484,20 +450,13 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                         18,
-                                                                        fontWeight: _questionList[_currentPage]
-                                                                            .questionChoiceList[
-                                                                        index2]
-                                                                            .isChoosen
+                                                                        fontWeight: isChoosen
                                                                             ? FontWeight
                                                                             .bold
                                                                             : FontWeight
                                                                             .w400,
-                                                                        color: _questionList[_currentPage]
-                                                                            .questionChoiceList[
-                                                                        index2]
-                                                                            .isChoosen
-                                                                            ? Colors
-                                                                            .black
+                                                                        color: isChoosen
+                                                                            ? Colors.white
                                                                             : color_text_dark),
                                                                   ),
                                                                   Icon(
@@ -508,8 +467,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                                         .questionChoiceList[
                                                                     index2]
                                                                         .isChoosen
-                                                                        ? color_charcoal_blue
-                                                                        : color_trans_black_300,
+                                                                        ? Colors.white
+                                                                        : color_trans22_black_300,
                                                                     size: 20,
                                                                   )
                                                                 ],
@@ -578,6 +537,46 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                       }),
                                                 ),
                                               ),
+                                              Positioned( //상단부분 그림자
+                                                top: -1,
+                                                child: AnimatedContainer(
+                                                  duration:
+                                                  Duration(milliseconds: 200),
+                                                  width: 10000,
+                                                  height: (provider.getScrollPosition()>-1)&&isMoreList?45:0,
+                                                  decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          begin:
+                                                          Alignment.topCenter,
+                                                          end: Alignment
+                                                              .bottomCenter,
+                                                          colors: [
+                                                            color_eui_light,
+                                                      color_trans66_eui,
+                                                          ])),
+                                                ),
+                                              ),
+                                              Positioned( //하단부분 그림자
+                                                bottom: -1,
+                                                child: AnimatedContainer(
+                                                  duration:
+                                                  Duration(milliseconds: 200),
+                                                  width: 1000,
+                                                  height: (provider.getScrollPosition()<1)&&isMoreList?45:0,
+                                                  decoration: BoxDecoration(
+                                                    boxShadow: [BoxShadow(color: Colors.transparent)],
+                                                      gradient: LinearGradient(
+                                                          begin:
+                                                          Alignment.topCenter,
+                                                          end: Alignment
+                                                              .bottomCenter,
+                                                          colors: [
+                                                            color_trans66_eui,
+                                                            color_eui_light
+                                                          ])),
+                                                ),
+                                              ),
+
                                             ],
                                           ),
                                         ],
@@ -606,7 +605,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                           SizedBox(
                                             width: 10,
                                           ),
-                                          Text('음성으로도 응답할 수 있어요')
+                                          Text(_isVoiceRecog?'버튼으로만 응답할 수 있어요':'음성으로도 응답할 수 있어요')
                                         ],
                                       ),
                                     ),
@@ -641,8 +640,10 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
   //버튼 클릭에 의해 다음페이지로 이동되게
   void _onChoiceBtnClicked(int index2) {
-    if (_waitPageTimer != null && _waitPageTimer.isActive) {
-      return; //페이지가 넘어가기 전 막 클릭했을 경우 아무것도 변경 안되게
+
+
+    if(_isPageChanging){
+      return; //페이지 변경이 완전 끝나고 나서 변경이 가능하게
     }
 
     for (int i = 0;
@@ -725,16 +726,18 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
   }
 
+
+
   void _nextPage() {
     //직접사용 금지
     if (_waitPageTimer != null) {
       _waitPageTimer.cancel();
     }
-
+    _isPageChanging = true;
     //_nextPageFader();
-    _waitPageTimer = Timer(Duration(milliseconds: 300), () {
+    _waitPageTimer = Timer(Duration(milliseconds: 500), () {
       _pageController.nextPage(
-          duration: Duration(milliseconds: 300), curve: Curves.decelerate);
+          duration: Duration(milliseconds: 300), curve: Curves.decelerate).then((value) { _isPageChanging = false; });
     });
 
 

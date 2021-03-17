@@ -5,7 +5,7 @@ final Color color_charcoal_purple_light = Color(0xFFabadd6);
 final Color color_charcoal_purple = Color(0xFF8688BC);
 final Color color_charcoal_blue = Color(0xFF4662B2);
 final Color color_silver_white = Color(0xFFE8E8E8);
-final Color color_eui_light = Color(0xFFF1F2F6);
+final Color color_eui_light = Color(0xFFFFFFFF);
 
 
 //dark
@@ -20,4 +20,6 @@ final Color color_text_dark = Color(0xFF333333);
 
 //transparent
 
-final Color color_trans_black_300 = Color(0x22000000);
+final Color color_trans22_black_300 = Color(0x22000000);
+final Color color_trans66_eui = Color(0x66FFFFFF);
+final Color color_trans55_eui = Color(0x55FFFFFF);
