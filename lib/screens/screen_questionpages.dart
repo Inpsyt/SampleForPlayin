@@ -13,9 +13,11 @@ import 'package:playinsample/models/model_answer.dart';
 import 'package:playinsample/models/model_exam.dart';
 import 'package:playinsample/models/model_question.dart';
 import 'package:playinsample/models/model_questionchoice.dart';
+import 'package:playinsample/providers/provider_scrollanimation.dart';
 import 'package:playinsample/screens/screen_submit.dart';
 
 import 'package:highlight_text/highlight_text.dart';
+import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class Post {
@@ -71,7 +73,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   final ModelExam _modelExam;
   final bool isOnline;
 
-  final double _paddingHorizontal = 30;
+  final double _paddingHorizontal = 58;
 
   Future<List<ModelQuestion>> _fQuestionList;
   List<ModelQuestion> _questionList;
@@ -94,15 +96,18 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   bool isMoreList = true;
   double _containerHeigh = 0;
   bool isShowing = false;
+  ProviderScrollAnimation _providerScrollAnimation;
+  //int _scrollPosition = -1; // -1일경우 상단, 0은 중앙, 1은 하단에 위치해있는 상태
+  ScrollController _scrollController = ScrollController();
 
   //animation effect
   FadeInController topFadeController = FadeInController(autoStart: false);
   FadeInController middleTopFadeController = FadeInController(autoStart: false);
-  FadeInController middleBottomFadeController =
-      FadeInController(autoStart: false);
+  FadeInController middleBottomFadeController =FadeInController(autoStart: false);
   FadeInController bottomFadeController = FadeInController(autoStart: false);
-  FadeInController centerTextFadeController =
-      FadeInController(autoStart: false);
+  FadeInController centerTextFadeController = FadeInController(autoStart: false);
+  int _dynamicDuration = 1000;
+  
 
   _ScreenQuestionPagesState(this._modelExam, this.isOnline);
 
@@ -122,6 +127,13 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       _psyOnlineCode = "97912a1edf07469c9733";
     }
 
+    _scrollController.addListener(() {
+       initScrollState();
+      });
+
+
+
+
     _speech = stt.SpeechToText();
 
     _listenVoice(true);
@@ -129,12 +141,26 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     super.initState();
   }
 
+  void initScrollState(){
+    if(_scrollController.offset >=_scrollController.position.maxScrollExtent){
+      _providerScrollAnimation.setScrollPosition(1);//하단에 있는 상태
+    }else if(_scrollController.offset <= _scrollController.position.minScrollExtent){
+      _providerScrollAnimation.setScrollPosition(-1); //상단에 있는 상태
+    }else{
+      _providerScrollAnimation.setScrollPosition(0);//중앙에 있는 상태
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    _providerScrollAnimation = Provider.of<ProviderScrollAnimation>(context,listen: false);
+
+    Future.delayed(Duration.zero, () => initScrollState());
+
 
     //print('ScreenSize :' + screenSize.width.toString());
-    // print('ScreenSize :' + screenSize.height.toString());
+    //print('ScreenSize :' + screenSize.height.toString());
 
     return WillPopScope(
       onWillPop: () {
@@ -224,10 +250,11 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                     children: [
                       Column(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+
+                          //중앙부 막대
                           Container(
-                            //상단부 막대
                             padding: EdgeInsets.symmetric(
                                 horizontal: _paddingHorizontal, vertical: 30),
                             child: Column(
@@ -274,308 +301,325 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                               ],
                             ),
                           ),
-                          Expanded(
-                            //상단부 문항 슬라이더
-                            child: FadeIn(
-                              controller: middleTopFadeController,
-                              duration: Duration(milliseconds: 1000),
-                              child: PageView.builder(
-                                  onPageChanged: (index) {
-                                    setState(() {
-                                      _currentPage = index;
-                                      _refreshDynamicListView(); //리스트뷰 크기 재조정
-                                      _speech.stop();
-                                      _listenVoice(true);
-                                    });
-                                  },
-                                  controller: _pageController,
-                                  physics: BouncingScrollPhysics(),
-                                  itemCount: _selectedCount,
-                                  itemBuilder: (context, index) {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: _paddingHorizontal),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Container(
-                                              child: Text(
-                                                _questionList[index]
-                                                    .reactionTitle
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: color_text_dark,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                //하단부 선택영역
-                                //color: Colors.red,
-                                height: screenSize.height * 1.4 / 3,
+
+                          //상단부 문항 슬라이더
+                          Consumer<ProviderScrollAnimation>(
+                            builder: (context,provider,child){
+                              return  Expanded(
+
                                 child: FadeIn(
-                                  controller: middleBottomFadeController,
-                                  duration: Duration(milliseconds: 1000),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Stack(
+                                  controller: middleTopFadeController,
+                                  duration: Duration(milliseconds: provider.getDynamicDuration()),
+                                  child: PageView.builder(
+                                      onPageChanged: (index) {
+                                        setState(() {
+                                          _currentPage = index;
+                                          _refreshDynamicListView(); //리스트뷰 크기 재조정
+                                          _speech.stop();
+                                          _listenVoice(true);
+                                        });
+                                      },
+                                      controller: _pageController,
+                                      physics: BouncingScrollPhysics(),
+                                      itemCount: _selectedCount,
+                                      itemBuilder: (context, index) {
+                                        return Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: _paddingHorizontal),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  child: Text(
+                                                    _questionList[index]
+                                                        .reactionTitle
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: color_text_dark,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                        FontWeight.bold),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              );
+                             }
+                          ),
+
+
+                          //하단부 선택영역
+                          Consumer<ProviderScrollAnimation>(
+                            builder: (context,provider,child){
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+
+                                    //color: Colors.red,
+                                    height: screenSize.height * 1.4 / 3,
+                                    child: FadeIn(
+                                      controller: middleBottomFadeController,
+                                      duration: Duration(milliseconds: provider.getDynamicDuration()),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Positioned(
-                                            top: 0,
-                                            child: AnimatedContainer(
-                                              duration:
-                                                  Duration(milliseconds: 500),
-                                              width: 10000,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      begin:
+                                          Stack(
+                                            children: [
+                                              Positioned( //상단부분 그림자
+                                                top: 0,
+                                                child: AnimatedContainer(
+                                                  duration:
+                                                  Duration(milliseconds: 200),
+                                                  width: 10000,
+                                                  height: isMoreList?30:0,
+                                                  decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          begin:
                                                           Alignment.topCenter,
-                                                      end: Alignment
-                                                          .bottomCenter,
-                                                      colors: [
-                                                    isMoreList
-                                                        ? color_trans_black_300
-                                                        : Colors.transparent,
-                                                    Colors.transparent
-                                                  ])),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 0,
-                                            child: AnimatedContainer(
-                                              duration:
-                                                  Duration(milliseconds: 500),
-                                              width: 1000,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      begin:
+                                                          end: Alignment
+                                                              .bottomCenter,
+                                                          colors: [
+                                                            provider.getScrollPosition()>-1
+                                                                ? color_trans_black_300
+                                                                : Colors.transparent,
+                                                            Colors.transparent
+                                                          ])),
+                                                ),
+                                              ),
+                                              Positioned( //하단부분 그림자
+                                                bottom: 0,
+                                                child: AnimatedContainer(
+                                                  duration:
+                                                  Duration(milliseconds: 200),
+                                                  width: 1000,
+                                                  height: isMoreList?30:0,
+                                                  decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          begin:
                                                           Alignment.topCenter,
-                                                      end: Alignment
-                                                          .bottomCenter,
-                                                      colors: [
-                                                    Colors.transparent,
-                                                    isMoreList
-                                                        ? color_trans_black_300
-                                                        : Colors.transparent,
-                                                  ])),
-                                            ),
-                                          ),
-                                          AnimatedContainer(
-                                            duration:
+                                                          end: Alignment
+                                                              .bottomCenter,
+                                                          colors: [
+                                                            Colors.transparent,
+                                                            provider.getScrollPosition()<1
+                                                                ? color_trans_black_300
+                                                                : Colors.transparent,
+                                                          ])),
+                                                ),
+                                              ),
+                                              AnimatedContainer(
+                                                duration:
                                                 Duration(milliseconds: 500),
-                                            curve: Curves.linear,
-                                            height: _containerHeigh,
-                                            child: Center(
-                                              child: ListView.separated(
-                                                  physics: isMoreList
-                                                      ? BouncingScrollPhysics(
+                                                curve: Curves.linear,
+                                                height: _containerHeigh,
+                                                child: Center(
+                                                  child: ListView.separated(
+                                                      controller: _scrollController,
+                                                      physics: isMoreList
+                                                          ? BouncingScrollPhysics(
                                                           parent:
-                                                              AlwaysScrollableScrollPhysics())
-                                                      : NeverScrollableScrollPhysics(),
-                                                  shrinkWrap: true,
-                                                  separatorBuilder:
-                                                      (context, index) {
-                                                    return Padding(
-                                                      padding: EdgeInsets.symmetric(
-                                                          horizontal:
+                                                          AlwaysScrollableScrollPhysics())
+                                                          : NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      separatorBuilder:
+                                                          (context, index) {
+                                                        return Padding(
+                                                          padding: EdgeInsets.symmetric(
+                                                              horizontal:
                                                               _paddingHorizontal),
-                                                      child: Container(
-                                                        height: 1,
-                                                        color:
+                                                          child: Container(
+                                                            height: 1,
+                                                            color:
                                                             color_trans_black_300,
-                                                      ),
-                                                    );
-                                                  },
-                                                  itemCount: _questionList[
-                                                          _currentPage]
-                                                      .questionChoiceList
-                                                      .length,
-                                                  itemBuilder:
-                                                      (context, index2) {
-                                                    return Padding(
-                                                      padding:
+                                                          ),
+                                                        );
+                                                      },
+                                                      itemCount: _questionList[
+                                                      _currentPage]
+                                                          .questionChoiceList
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, index2) {
+                                                        return Padding(
+                                                          padding:
                                                           EdgeInsets.symmetric(
                                                               vertical: 0),
-                                                      child: ListTile(
-                                                        title: Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
+                                                          child: ListTile(
+                                                            title: Padding(
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
                                                                   vertical: 7,
                                                                   horizontal:
-                                                                      _paddingHorizontal -
-                                                                          10),
-                                                          child: Row(
-                                                            mainAxisSize:
+                                                                  _paddingHorizontal -
+                                                                      10),
+                                                              child: Row(
+                                                                mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
-                                                            mainAxisAlignment:
+                                                                mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                (index2 + 1)
+                                                                children: [
+                                                                  Text(
+                                                                    (index2 + 1)
                                                                         .toString() +
-                                                                    '. ' +
-                                                                    _questionList[
-                                                                            _currentPage]
-                                                                        .questionChoiceList[
-                                                                            index2]
-                                                                        .choiceDirection
-                                                                        .toString(),
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight: _questionList[_currentPage]
+                                                                        '. ' +
+                                                                        _questionList[
+                                                                        _currentPage]
                                                                             .questionChoiceList[
-                                                                                index2]
+                                                                        index2]
+                                                                            .choiceDirection
+                                                                            .toString(),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                        18,
+                                                                        fontWeight: _questionList[_currentPage]
+                                                                            .questionChoiceList[
+                                                                        index2]
                                                                             .isChoosen
-                                                                        ? FontWeight
+                                                                            ? FontWeight
                                                                             .bold
-                                                                        : FontWeight
-                                                                            .w500,
-                                                                    color: _questionList[_currentPage]
+                                                                            : FontWeight
+                                                                            .w400,
+                                                                        color: _questionList[_currentPage]
                                                                             .questionChoiceList[
-                                                                                index2]
+                                                                        index2]
                                                                             .isChoosen
-                                                                        ? Colors
+                                                                            ? Colors
                                                                             .black
-                                                                        : color_black_500),
-                                                              ),
-                                                              Icon(
-                                                                Icons
-                                                                    .check_circle,
-                                                                color: _questionList[
-                                                                            _currentPage]
+                                                                            : color_text_dark),
+                                                                  ),
+                                                                  Icon(
+                                                                    Icons
+                                                                        .check_circle,
+                                                                    color: _questionList[
+                                                                    _currentPage]
                                                                         .questionChoiceList[
-                                                                            index2]
+                                                                    index2]
                                                                         .isChoosen
-                                                                    ? color_charcoal_blue
-                                                                    : color_trans_black_300,
-                                                                size: 20,
-                                                              )
-                                                            ],
+                                                                        ? color_charcoal_blue
+                                                                        : color_trans_black_300,
+                                                                    size: 20,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            onTap: () =>
+                                                                _onChoiceBtnClicked(
+                                                                    index2),
                                                           ),
-                                                        ),
-                                                        onTap: () =>
-                                                            _onChoiceBtnClicked(
-                                                                index2),
-                                                      ),
 
-                                                      /*
-                                          FlatButton(
-                                              highlightColor: color_charcoal_purple,
-                                              splashColor: color_charcoal_purple,
-                                              focusColor: color_charcoal_purple,
-                                              color: _questionList[_currentPage]
-                                                      .questionChoiceList[index2]
-                                                      .isChoosen
-                                                  ? color_charcoal_purple
-                                                  : Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                  side: BorderSide(color: color_black_600),
-                                                  borderRadius: BorderRadius.circular(10)),
-                                              onPressed: () {
-                                                for (int i = 0;
-                                                    i <
-                                                        _questionList[_currentPage]
-                                                            .questionChoiceList
-                                                            .length;
-                                                    i++) {
-                                                  _questionList[_currentPage]
-                                                      .questionChoiceList[i]
-                                                      .isChoosen = false;
-                                                }
-                                                setState(() {
-                                                  _questionList[_currentPage]
-                                                      .questionChoiceList[index2]
-                                                      .isChoosen = true;
-                                                });
+                                                          /*
+                                              FlatButton(
+                                                  highlightColor: color_charcoal_purple,
+                                                  splashColor: color_charcoal_purple,
+                                                  focusColor: color_charcoal_purple,
+                                                  color: _questionList[_currentPage]
+                                                          .questionChoiceList[index2]
+                                                          .isChoosen
+                                                      ? color_charcoal_purple
+                                                      : Colors.white,
+                                                  shape: RoundedRectangleBorder(
+                                                      side: BorderSide(color: color_black_600),
+                                                      borderRadius: BorderRadius.circular(10)),
+                                                  onPressed: () {
+                                                    for (int i = 0;
+                                                        i <
+                                                            _questionList[_currentPage]
+                                                                .questionChoiceList
+                                                                .length;
+                                                        i++) {
+                                                      _questionList[_currentPage]
+                                                          .questionChoiceList[i]
+                                                          .isChoosen = false;
+                                                    }
+                                                    setState(() {
+                                                      _questionList[_currentPage]
+                                                          .questionChoiceList[index2]
+                                                          .isChoosen = true;
+                                                    });
 
-                                                _pageController.nextPage(
-                                                    duration: Duration(milliseconds: 200),
-                                                    curve: Curves.decelerate);
-                                              },
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(vertical: 7),
-                                                child: Text(
-                                                  _questionList[_currentPage]
-                                                      .questionChoiceList[index2]
-                                                      .choiceDirection
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: _questionList[_currentPage]
-                                                              .questionChoiceList[index2]
-                                                              .isChoosen
-                                                          ? Colors.white
-                                                          : color_black_500),
+                                                    _pageController.nextPage(
+                                                        duration: Duration(milliseconds: 200),
+                                                        curve: Curves.decelerate);
+                                                  },
+                                                  child: Padding(
+                                                    padding: EdgeInsets.symmetric(vertical: 7),
+                                                    child: Text(
+                                                      _questionList[_currentPage]
+                                                          .questionChoiceList[index2]
+                                                          .choiceDirection
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: _questionList[_currentPage]
+                                                                  .questionChoiceList[index2]
+                                                                  .isChoosen
+                                                              ? Colors.white
+                                                              : color_black_500),
+                                                    ),
+                                                  )),
+
+
+                                              */
+                                                        );
+                                                      }),
                                                 ),
-                                              )),
-
-
-                                          */
-                                                    );
-                                                  }),
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                              FadeIn(
-                                duration: Duration(milliseconds: 1000),
-                                controller: bottomFadeController,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 30),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CupertinoSwitch(
-                                        value: _isVoiceRecog,
-                                        onChanged: (isChecked) {
-                                          setState(() {
-                                            _isVoiceRecog = !_isVoiceRecog;
-                                          });
-                                          _listenVoice(true);
-                                        },
-                                        activeColor: color_charcoal_blue,
+                                  FadeIn(
+                                    duration: Duration(milliseconds: 1000),
+                                    controller: bottomFadeController,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(vertical: 30),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          CupertinoSwitch(
+                                            value: _isVoiceRecog,
+                                            onChanged: (isChecked) {
+                                              setState(() {
+                                                _isVoiceRecog = !_isVoiceRecog;
+                                              });
+                                              _listenVoice(true);
+                                            },
+                                            activeColor: color_charcoal_blue,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text('음성으로도 응답할 수 있어요')
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text('음성으로도 응답할 수 있어요')
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
+
                           ),
                         ],
                       ),
+
+                      //중앙의 제목 표시영역
                       FadeIn(
                           duration: Duration(milliseconds: 1000),
                           controller: centerTextFadeController,
@@ -595,6 +639,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     );
   }
 
+  //버튼 클릭에 의해 다음페이지로 이동되게
   void _onChoiceBtnClicked(int index2) {
     if (_waitPageTimer != null && _waitPageTimer.isActive) {
       return; //페이지가 넘어가기 전 막 클릭했을 경우 아무것도 변경 안되게
@@ -611,9 +656,12 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     });
 
     _checkSelectedCount();
+
+    _nextPage();
   }
 
-  void _refreshDynamicListView() {
+
+  void _refreshDynamicListView() { //인트로 모션까지 포함
     if (_questionList[_currentPage].questionChoiceList.length > 5) {
       isMoreList = true;
       _containerHeigh = MediaQuery.of(context).size.height / 2 - 100;
@@ -674,19 +722,36 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     }
     _selectedCount = selectedCount;
 
-    _nextPage();
+
   }
 
   void _nextPage() {
+    //직접사용 금지
     if (_waitPageTimer != null) {
       _waitPageTimer.cancel();
     }
 
+    //_nextPageFader();
     _waitPageTimer = Timer(Duration(milliseconds: 300), () {
       _pageController.nextPage(
           duration: Duration(milliseconds: 300), curve: Curves.decelerate);
     });
+
+
   }
+
+  void _nextPageFader(){
+    _providerScrollAnimation.setDynamicDuration(100);
+    middleTopFadeController.fadeOut();
+    middleBottomFadeController.fadeOut();
+
+    Timer(Duration(milliseconds: 1300),(){
+      _providerScrollAnimation.setDynamicDuration(1000);
+      middleTopFadeController.fadeIn();
+      middleBottomFadeController.fadeIn();
+    });
+  }
+
 
   void _submit() {
     _fQuestionList.then((value) async {
