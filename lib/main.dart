@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:playinsample/constants/constant_colors.dart';
 import 'package:playinsample/providers/provider_appstatus.dart';
 import 'package:playinsample/providers/provider_exam.dart';
-import 'package:playinsample/providers/provider_scrollanimation.dart';
+import 'package:playinsample/providers/provider_questionpages.dart';
 import 'package:playinsample/screens/screen_select.dart';
 import 'package:provider/provider.dart';
 
@@ -42,8 +42,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<ProviderAppStatus>(
           create: (context) => ProviderAppStatus(),
         ),
-        ChangeNotifierProvider<ProviderScrollAnimation>(
-          create: (context) => ProviderScrollAnimation(),
+        ChangeNotifierProvider<ProviderQuestionPages>(
+          create: (context) => ProviderQuestionPages(),
         )
       ],
       child: MaterialApp(

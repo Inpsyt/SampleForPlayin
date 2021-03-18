@@ -20,6 +20,8 @@ final Color color_text_dark = Color(0xFF333333);
 
 //transparent
 
-final Color color_trans22_black_300 = Color(0x22000000);
+final Color color_trans22_black = Color(0x22000000);
+final Color color_trans55_black = Color(0x33000000);
+final Color color_trans00_eui = Color(0x00FFFFFF);
 final Color color_trans66_eui = Color(0x66FFFFFF);
 final Color color_trans55_eui = Color(0x55FFFFFF);
