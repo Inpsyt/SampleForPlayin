@@ -39,4 +39,11 @@ class ProviderQuestionPages extends ChangeNotifier{
     notifyListeners();
   }
 
+  double _soundLevel = 0.0;
+  double getSoundLevel() => this._soundLevel;
+  void setSoundLevel(double level) {
+    this._soundLevel = level;
+    notifyListeners();
+  }
+
 }
