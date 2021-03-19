@@ -656,8 +656,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                         width: 10,
                                       ),
                                       Text(_isVoiceRecog
-                                          ? '버튼으로만 응답할 수 있어요'
-                                          : '음성으로도 응답할 수 있어요'),
+                                          ? '음성으로도 응답할 수 있어요'
+                                          : '버튼으로만 응답할 수 있어요'),
                                     ],
                                   ),
                                 ),
