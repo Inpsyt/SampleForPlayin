@@ -510,10 +510,10 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                         ),
                                                       ),
                                                       onTap: () {
-                                                        setState(() {
+
                                                           _onChoiceBtnClicked(
                                                               index2);
-                                                        });
+
                                                       },
                                                     ),
                                                   );
@@ -774,8 +774,9 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
     print('넥스트 페이지 전까지 ');
 
-    _nextPage();
     _refreshDynamicListView();
+    _nextPage();
+
   }
 
   bool _checkIsLastPage() {
@@ -795,7 +796,9 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     _isPageChanging = true;
     //_nextPageFader();
 
-    centerFloatingCircleFadeController.fadeIn();
+    setState(() { //여기서 setState는 음성인식에 의한 또는 손터치에 의한 리스트 타일의 색변경을 갱신하기 위한 용도
+      centerFloatingCircleFadeController.fadeIn();
+    });
 
     _waitPageTimer = Timer(Duration(milliseconds: 800), () {
       centerFloatingCircleFadeController.fadeOut();
@@ -816,12 +819,16 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   }
 
   void _refreshDynamicListView() {
-    //인트로 모션까지 포함
-    if (_questionList[_currentPage].questionChoiceList.length > 5) {
-      isMoreList = true;
-    } else {
-      isMoreList = false;
-    }
+
+
+      //인트로 모션까지 포함
+      if (_questionList[_currentPage].questionChoiceList.length > 5) {
+        isMoreList = true;
+      } else {
+        isMoreList = false;
+      }
+
+
 
     if (!isShowing) {
       //화면 로드된 후 한번만 실행
