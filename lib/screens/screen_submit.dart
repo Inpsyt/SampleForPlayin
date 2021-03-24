@@ -6,9 +6,17 @@ import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:http/http.dart' as http;
 import 'package:playinsample/constants/constant_colors.dart';
 import 'package:playinsample/models/model_questionchoice.dart';
+import 'package:playinsample/providers/provider_exam.dart';
+import 'package:playinsample/providers/provider_questionpages.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScreenSubmit extends StatelessWidget {
+
+  ProviderExam _providerExam;
+  ProviderQuestionPages _providerQuestionPages;
+
+  int mode;
   final String examName;
   final String psyOnlineCode;
   final List<ModelQuestionChoice> qCList; //문제번호,선택한답안을 저장할 곳
@@ -20,6 +28,14 @@ class ScreenSubmit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    _providerExam = Provider.of<ProviderExam>(context,listen: false);
+    _providerQuestionPages = Provider.of<ProviderQuestionPages>(context,listen: false);
+
+    mode = _providerExam.getBottomBarPage();
+
+
+
     //메소드화 시키기 initBody..
     _body = {
       'psyOnlineCode': psyOnlineCode.toString(), //json이 막상 웹에서 받을땐 string형으로 받음

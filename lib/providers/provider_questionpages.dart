@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:playinsample/common/common_networkservice.dart';
+import 'package:playinsample/models/model_questionchoice.dart';
 import 'package:playinsample/models/model_userInfo.dart';
 
 import '../models/model_answer.dart';
@@ -93,5 +94,51 @@ class ProviderQuestionPages extends ChangeNotifier{
     return modelQuestionList;
 
   }
+
+  Future<String> submitInpsytQuestionChoice(String psyOnlineCode,List<ModelQuestionChoice> qcList) async{
+
+
+    List _qcList = new List();
+
+    for(int i=0; i<qcList.length; i++){
+      _qcList.add({ "questionNo":i, "choiceNo":qcList[i].choiceNo, "choiceScore":qcList[i].choiceScore});
+    }
+
+
+
+    String convertedJson = 'paperJson='+Uri.encodeQueryComponent(json.encode({'questionChoiceList':_qcList}))
+        +'&atProgressRate='+''
+        +'&atTemplateCd='+'0003'
+        +'&atTypeCd='+'0004'
+        +'&userTestingNo='+psyOnlineCode
+        +'&psyItemId='+'KPRQ_CO_PG_P'
+        +'&psyItemVer='+'V1.0'
+        +'&subPsyItemId='+'00240083'
+        +'&yyyymm='+'202103'
+        +'&schId='+''
+    ;
+
+    for(int i = 0; i<_qcList.length; i++){
+      convertedJson += '&${i+1}=${_qcList[i]['choiceNo']}';
+    }
+    for(int i = 0; i<_qcList.length; i++){
+      convertedJson += '&arrayScaleManageScore=${_qcList[i]['choiceScore']}';
+    }
+
+    convertedJson += '&psyTerminalCd=PC&psyTerminalBrowserCd=chrome';
+
+    //return(convertedJson);
+
+
+    //String postData = 'paperJson=%7B%22questionChoiceList%22%3A%5B%7B%22questionNo%22%3A1%2C%22choiceNo%22%3A%220%22%2C%22choiceScore%22%3A%220%22%7D%2C%7B%22questionNo%22%3A2%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A3%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A4%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A5%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A6%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A7%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A8%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A9%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A10%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A11%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A12%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A13%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A14%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A15%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A16%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A17%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A18%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A19%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A20%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A21%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A22%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A23%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A24%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A25%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A26%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A27%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A28%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A29%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A30%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A31%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A32%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A33%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A34%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A35%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A36%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A37%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A38%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A39%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A40%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A41%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A42%2C%22choiceNo%22%3A%223%22%2C%22choiceScore%22%3A%223%22%7D%2C%7B%22questionNo%22%3A43%2C%22choiceNo%22%3A%221%22%2C%22choiceScore%22%3A%221%22%7D%2C%7B%22questionNo%22%3A44%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%2C%7B%22questionNo%22%3A45%2C%22choiceNo%22%3A%222%22%2C%22choiceScore%22%3A%222%22%7D%5D%7D&atProgressRate=&atTemplateCd=0003&atTypeCd=0004&userTestingNo=${psyCode}&psyItemId=KPRQ_CO_PG_P&psyItemVer=V1.0&subPsyItemId=00240083&yyyymm=202103&schId=&1=0&2=1&3=2&4=3&5=1&6=2&7=3&8=2&9=1&10=1&11=2&12=3&13=1&14=1&15=2&16=3&17=1&18=2&19=3&20=1&21=2&22=3&23=1&24=2&25=3&26=1&27=2&28=3&29=1&30=2&31=1&32=2&33=3&34=1&35=2&36=3&37=1&38=2&39=3&40=1&41=2&42=3&43=1&44=2&45=2&arrayScaleManageScore=0&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=2&arrayScaleManageScore=1&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=3&arrayScaleManageScore=1&arrayScaleManageScore=2&arrayScaleManageScore=2&psyTerminalCd=PC&psyTerminalBrowserCd=chrome';
+
+    await Future.delayed(Duration(milliseconds:1000));
+    return await _commonNetworkService.post(
+        'https://inpsyt.co.kr/testing/questionAnswerAddProcess', body: convertedJson,encoding: Encoding.getByName('utf-8'));
+
+    //return await fetchSubmitPost(_body);
+  }
+
+
 
 }

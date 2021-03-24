@@ -156,6 +156,7 @@ class ScreenSelect extends StatelessWidget {
                 )),
             Expanded(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 onPageChanged: (index) {
                   _providerExam.setBottomBarPage(index);
                 },
@@ -173,66 +174,75 @@ class ScreenSelect extends StatelessWidget {
 
                         return _listItem(context, modelExam);
                       }),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          '코드입력',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                            child: TextField(
-                              controller: _psyCodeInputController,
-                              decoration: InputDecoration(
-                                hintText: '온라인 시험 코드를 입력하세요..',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                fillColor: Colors.white70,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0)),
-                                  borderSide:
-                                      BorderSide(color: color_charcoal_blue, width: 2),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  borderSide: BorderSide(color: color_charcoal_blue),
-                                ),
-                              ),
-                            )),
-                        FlatButton(
-                          onPressed: () {
+                  ListView(
 
-                            ModelExam dummyModelExam = ModelExam('InpsytTest','');
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (BuildContext context) {
-                                  return ScreenQuestionPages(dummyModelExam);
-                                }));
-                            _providerExam.setPsyOnlineCode(_psyCodeInputController.text);
-                          },
-                          child: Text(
-                            '검사실시',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: color_charcoal_blue,
-                        )
-                      ],
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 100),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 8.0,
-                            offset: Offset(0.1, 0.9))
-                      ],
-                    ),
+                    children: [
+                      Container(
+                        child: Column(
+
+                          children: [
+                            SizedBox(height: 20,),
+                            Text(
+                              '코드입력',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 60,),
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                child: TextField(
+                                  controller: _psyCodeInputController,
+                                  decoration: InputDecoration(
+                                    hintText: '온라인 시험 코드를 입력하세요..',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    filled: true,
+                                    fillColor: Colors.white70,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0)),
+                                      borderSide:
+                                      BorderSide(color: color_charcoal_blue, width: 2),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                      borderSide: BorderSide(color: color_charcoal_blue),
+                                    ),
+                                  ),
+                                )),
+                            SizedBox(height: 20,),
+                            FlatButton(
+                              onPressed: () {
+
+                                ModelExam dummyModelExam = ModelExam('InpsytTest','');
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (BuildContext context) {
+                                      return ScreenQuestionPages(dummyModelExam);
+                                    }));
+                                _providerExam.setPsyOnlineCode(_psyCodeInputController.text);
+                              },
+                              child: Text(
+                                '검사실시',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: color_charcoal_blue,
+                            ),
+                            SizedBox(height: 20,),
+                          ],
+                        ),
+                        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 8.0,
+                                offset: Offset(0.1, 0.9))
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   ListView.builder(
                       physics: BouncingScrollPhysics(
