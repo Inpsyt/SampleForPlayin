@@ -5,19 +5,29 @@ class ProviderExam extends ChangeNotifier{
 
 
   int _bottomBarPage = 0;
-  List<ModelExam> _onlineList = List<ModelExam>();
-  List<ModelExam> _offlineList = List<ModelExam>();
-
-
-  
-  
+  int getBottomBarPage()=> this._bottomBarPage;
   void setBottomBarPage(int index){
     this._bottomBarPage = index;
     notifyListeners();
   }
-  int getBottomBarPage(){
-    return this._bottomBarPage;
+
+
+  String _psyOnlineCode = '';
+  String getPsyOnlineCode() => this._psyOnlineCode;
+  void setPsyOnlineCode(String code){
+    this._psyOnlineCode = code;
+    notifyListeners();
   }
+
+
+
+  List<ModelExam> _onlineList = List<ModelExam>();
+  List<ModelExam> _offlineList = List<ModelExam>();
+
+
+
+  
+
   
   
 

@@ -14,13 +14,10 @@ import 'package:playinsample/models/model_answer.dart';
 import 'package:playinsample/models/model_exam.dart';
 import 'package:playinsample/models/model_question.dart';
 import 'package:playinsample/models/model_questionchoice.dart';
-import 'package:playinsample/models/model_userInfo.dart';
 import 'package:playinsample/providers/provider_questionpages.dart';
 import 'package:playinsample/screens/screen_submit.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-
-import '../providers/provider_exam.dart';
 
 class Post {
   dynamic questionList;
@@ -61,16 +58,19 @@ Future<Post> fetchPost(var body) async {
 
 class ScreenQuestionPages extends StatefulWidget {
   final ModelExam _modelExam;
-  ScreenQuestionPages(this._modelExam);
+
+  final bool isOnline;
+
+  ScreenQuestionPages(this._modelExam, this.isOnline);
 
   @override
   _ScreenQuestionPagesState createState() =>
-      _ScreenQuestionPagesState(this._modelExam);
+      _ScreenQuestionPagesState(this._modelExam, this.isOnline);
 }
 
 class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   final ModelExam _modelExam;
-  int mode;
+  final bool isOnline;
 
   double _paddingHorizontal = 58;
 
@@ -99,7 +99,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
   //double _containerHeigh = 0;
   bool isShowing = false;
-  ProviderQuestionPages _providerQuestionPages;
+  ProviderQuestionPages _providerScrollAnimation;
   ScrollController _scrollController = ScrollController();
 
   //animation effect
@@ -114,29 +114,20 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       FadeInController(autoStart: false);
   int _dynamicDuration = 1000;
 
-  _ScreenQuestionPagesState(this._modelExam);
+  _ScreenQuestionPagesState(this._modelExam, this.isOnline);
 
   @override
   void initState() {
     // TODO: implement initState
-    ProviderExam providerExam = Provider.of<ProviderExam>(context,listen: false);
-    _providerQuestionPages =
-        Provider.of<ProviderQuestionPages>(context, listen: false);
 
-    mode = providerExam.getBottomBarPage();
-
-    if (mode == 0) { //샘플서버
+    if (isOnline) {
       _fQuestionList = _fromPost(); //Post로부터 받은 json을 List화로 만들어줌
       _post.then((value) {
         //중요한 코드 저장
         _psyOnlineCode = value.psyOnlineCode.toString();
         print('psyOnlineCode : ' + _psyOnlineCode);
       });
-    }else if(mode ==1) { //정식서버
-      _psyOnlineCode = providerExam.getPsyOnlineCode();
-      _fQuestionList = _providerQuestionPages.getInpsytQuestionJson(_psyOnlineCode, ModelUserInfo(name: 'KJW')); //이부분 SharedPreference로 적용 예정
-    }
-    else { //오프라인
+    } else {
       _fQuestionList = _fromJson();
       _psyOnlineCode = "97912a1edf07469c9733";
     }
@@ -153,12 +144,12 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
   void initScrollState() {
     if (_scrollController.offset >=
         _scrollController.position.maxScrollExtent) {
-      _providerQuestionPages.setScrollPosition(1); //하단에 있는 상태
+      _providerScrollAnimation.setScrollPosition(1); //하단에 있는 상태
     } else if (_scrollController.offset <=
         _scrollController.position.minScrollExtent) {
-      _providerQuestionPages.setScrollPosition(-1); //상단에 있는 상태
+      _providerScrollAnimation.setScrollPosition(-1); //상단에 있는 상태
     } else {
-      _providerQuestionPages.setScrollPosition(0); //중앙에 있는 상태
+      _providerScrollAnimation.setScrollPosition(0); //중앙에 있는 상태
     }
   }
 
@@ -182,7 +173,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
     _paddingHorizontal = screenSize.width / 8.4;
 
-
+    _providerScrollAnimation =
+        Provider.of<ProviderQuestionPages>(context, listen: false);
 
     Future.delayed(
         Duration.zero, () => initScrollState()); //setState된 후 위젯이 모두 빌드 된 다음 실행
@@ -625,7 +617,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                       GestureDetector(onTap: () {
                                         setState(() {
                                           if (_isVoiceRecog) {
-                                            _providerQuestionPages
+                                            _providerScrollAnimation
                                                 .setSoundLevel(0);
                                             _speech.stop();
                                           }
@@ -770,7 +762,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     if (_isPageChanging) {
       return; //페이지 변경이 완전 끝나고 나서 변경이 가능하게
     }
-    _providerQuestionPages
+    _providerScrollAnimation
         .setFloatingCircleChildText(index2 + 1); //원형 플로팅의 자식의 텍스트를 위해 프로바이더에 적용
 
     for (int i = 0; //
@@ -1002,7 +994,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     maxSoundLevel = max(maxSoundLevel, level);
     // print("sound level $level: $minSoundLevel - $maxSoundLevel ");
 
-    _providerQuestionPages.setSoundLevel(level);
+    _providerScrollAnimation.setSoundLevel(level);
   }
 
   Future<List<ModelQuestion>> _fromPost() async {
@@ -1082,8 +1074,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     return modelQuestionList;
   }
 
-
-
   List<ModelQuestionChoice> _toQuestioinChoiceList(
       //원본문항리스트에서 문항+결과만 분리하는 작업
       List<ModelQuestion> modelQuestion) {
@@ -1099,7 +1089,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       questionChoiceItem.questionNo = questionItem.questionNo; //그곳에 문제번호부터 입력
 
       //이쯤에서 미리 무응답에대한 처리 수행
-      questionChoiceItem.choiceNo = '1';
+      questionChoiceItem.choiceNo = '3';
       questionChoiceItem.choiceScore = '1'; //임시방편
 
       for (int j = 0; j < questionItem.questionChoiceList.length; j++) {
