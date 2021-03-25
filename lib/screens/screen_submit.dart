@@ -247,14 +247,14 @@ Future<SubmitPost> fetchSubmitPost(var body) async {
   if (response.statusCode == 200) {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
 
-    print('제출 성공');
+    print('ScreenSubmit : 제출 성공');
 
     return SubmitPost.fromJson(json.decode(response.body));
     //throw response.body; //바디의 글자를 전부 출력
   } else {
     // 만약 요청이 실패하면, 에러를 던집니다.
 
-    print('실패');
+    print('ScreenSubmit : 실패');
     throw Exception('Failed to load post');
   }
 }

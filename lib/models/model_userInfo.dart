@@ -1,6 +1,7 @@
 class ModelUserInfo{
-  String name;
+  String testerName;
+  String groupName;
 
-  ModelUserInfo({this.name});
+  ModelUserInfo({this.testerName,this.groupName});
 
 }

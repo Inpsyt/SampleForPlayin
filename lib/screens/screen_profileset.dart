@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playinsample/constants/constant_colors.dart';
+import 'package:playinsample/models/model_userInfo.dart';
 import 'package:playinsample/providers/provider_appstatus.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class _ScreenProfileSetState extends State<ScreenProfileSet> {
 
   ProviderAppStatus _providerAppStatus;
   TextEditingController controller = TextEditingController();
+  ModelUserInfo _modelUserInfo;
 
 
 
@@ -21,7 +23,12 @@ class _ScreenProfileSetState extends State<ScreenProfileSet> {
 
     _providerAppStatus = Provider.of<ProviderAppStatus>(context,listen: false);
 
-    controller.text = _providerAppStatus.userStatus;
+    _providerAppStatus.getUserInfo().then((value) {
+      _modelUserInfo = value;
+      controller.text = _modelUserInfo.testerName;
+    });
+
+
 
     print('refreshed');
 
@@ -67,7 +74,9 @@ class _ScreenProfileSetState extends State<ScreenProfileSet> {
                     controller: controller,
                     textAlign: TextAlign.center,
                     onChanged: (text)async {
-                      _providerAppStatus.setUserStatus(text);
+                      _modelUserInfo.testerName = text;
+                      _modelUserInfo.groupName = '서비스기획팀';
+                      _providerAppStatus.setUserInfo(_modelUserInfo);
                     },
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: '이름을 입력하세요..'),

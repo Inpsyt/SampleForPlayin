@@ -17,6 +17,7 @@ import 'package:playinsample/models/model_questionchoice.dart';
 import 'package:playinsample/models/model_userInfo.dart';
 import 'package:playinsample/providers/provider_questionpages.dart';
 import 'package:playinsample/screens/screen_submit.dart';
+import 'package:playinsample/screens/screen_submit_inpsyt.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -61,15 +62,21 @@ Future<Post> fetchPost(var body) async {
 
 class ScreenQuestionPages extends StatefulWidget {
   final ModelExam _modelExam;
-  ScreenQuestionPages(this._modelExam);
+  final ModelUserInfo _modelUserInfo;
+  ScreenQuestionPages(this._modelExam,this._modelUserInfo);
 
   @override
   _ScreenQuestionPagesState createState() =>
-      _ScreenQuestionPagesState(this._modelExam);
+      _ScreenQuestionPagesState(this._modelExam,this._modelUserInfo);
 }
 
 class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
+  ProviderQuestionPages _providerQuestionPages;
+  ProviderExam _providerExam;
+
+
   final ModelExam _modelExam;
+  final ModelUserInfo _modelUserInfo;
   int mode;
 
   double _paddingHorizontal = 58;
@@ -99,7 +106,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
   //double _containerHeigh = 0;
   bool isShowing = false;
-  ProviderQuestionPages _providerQuestionPages;
+
   ScrollController _scrollController = ScrollController();
 
   //animation effect
@@ -114,16 +121,17 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
       FadeInController(autoStart: false);
   int _dynamicDuration = 1000;
 
-  _ScreenQuestionPagesState(this._modelExam);
+  _ScreenQuestionPagesState(this._modelExam,this._modelUserInfo);
 
   @override
   void initState() {
     // TODO: implement initState
-    ProviderExam providerExam = Provider.of<ProviderExam>(context,listen: false);
+     _providerExam = Provider.of<ProviderExam>(context,listen: false);
     _providerQuestionPages =
         Provider.of<ProviderQuestionPages>(context, listen: false);
 
-    mode = providerExam.getBottomBarPage();
+
+    mode = _providerExam.getBottomBarPage();
 
     if (mode == 0) { //샘플서버
       _fQuestionList = _fromPost(); //Post로부터 받은 json을 List화로 만들어줌
@@ -133,8 +141,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
         print('psyOnlineCode : ' + _psyOnlineCode);
       });
     }else if(mode ==1) { //정식서버
-      _psyOnlineCode = providerExam.getPsyOnlineCode();
-      _fQuestionList = _providerQuestionPages.getInpsytQuestionJson(_psyOnlineCode, ModelUserInfo(name: 'KJW')); //이부분 SharedPreference로 적용 예정
+      _psyOnlineCode = _providerExam.getPsyOnlineCode();
+      _fQuestionList = _providerQuestionPages.getInpsytQuestionJson(_psyOnlineCode, ModelUserInfo(testerName: _modelUserInfo.testerName,groupName: _modelUserInfo.groupName)); //이부분 SharedPreference로 적용 예정
     }
     else { //오프라인
       _fQuestionList = _fromJson();
@@ -248,17 +256,17 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
               },
             ),
             actions: [
-              /*
+
               FlatButton(
                   onPressed: () {
-                    _submit();
+                    _forceSubmit();
                   },
                   child: Text(
                     '제출',
                     style: TextStyle(color: color_text_dark, fontSize: 18),
                   ))
 
-              */
+
             ],
           ),
           body: FutureBuilder<List<ModelQuestion>>(
@@ -770,8 +778,12 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     if (_isPageChanging) {
       return; //페이지 변경이 완전 끝나고 나서 변경이 가능하게
     }
+
+
+
     _providerQuestionPages
         .setFloatingCircleChildText(index2 + 1); //원형 플로팅의 자식의 텍스트를 위해 프로바이더에 적용
+
 
     for (int i = 0; //
         i < _questionList[_currentPage].questionChoiceList.length;
@@ -780,7 +792,6 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     }
     _questionList[_currentPage].questionChoiceList[index2].isChoosen = true;
 
-    print('넥스트 페이지 전까지 ');
 
     _refreshDynamicListView();
     _nextPage();
@@ -899,11 +910,85 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                     Navigator.pop(context, false);
                     await Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return new ScreenSubmit(
+
+                          switch(mode){
+                            case 0: return ScreenSubmit(
+                                _modelExam.name,
+                                _toQuestioinChoiceList(_questionList),
+                                _psyOnlineCode);
+                            break;
+                            case 1: return ScreenSubmitInpsyt(
+                                _modelExam.name,
+                                _toQuestioinChoiceList(_questionList),
+                                _psyOnlineCode);
+                            break;
+                            default :  return ScreenSubmit(
+                                _modelExam.name,
+                                _toQuestioinChoiceList(_questionList),
+                                _psyOnlineCode);
+                          }
+                      return  ScreenSubmit(
                           _modelExam.name,
                           _toQuestioinChoiceList(_questionList),
                           _psyOnlineCode);
+
+
                     }));
+                    Navigator.pop(context, true);
+                  },
+                  child: Text('예'))
+            ],
+          );
+        },
+      );
+    });
+  }
+
+  void _forceSubmit() {
+    _fQuestionList.then((value) async {
+      //_fQuestionList가 불러왔을때 실행되고 그전엔 암것도 못하게
+      await showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text('바로 제출하겠습니까?'),
+            content: Text('현재 진행한 문항 외에는\n전부 2번로 체크되어 제출됩니다.'),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                    return;
+                  },
+                  child: Text('아니요')),
+              FlatButton(
+                  onPressed: () async {
+                    Navigator.pop(context, false);
+                    await Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+
+                          switch(mode){
+                            case 0: return ScreenSubmit(
+                                _modelExam.name,
+                                _toQuestioinChoiceList(_questionList),
+                                _psyOnlineCode);
+                            break;
+                            case 1: return ScreenSubmitInpsyt(
+                                _modelExam.name,
+                                _toQuestioinChoiceList(_questionList),
+                                _psyOnlineCode);
+                            break;
+                            default :  return ScreenSubmit(
+                                _modelExam.name,
+                                _toQuestioinChoiceList(_questionList),
+                                _psyOnlineCode);
+                          }
+                          return  ScreenSubmit(
+                              _modelExam.name,
+                              _toQuestioinChoiceList(_questionList),
+                              _psyOnlineCode);
+
+
+                        }));
                     Navigator.pop(context, true);
                   },
                   child: Text('예'))
@@ -960,8 +1045,9 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
     print(text);
 
     if (text.trim().contains('1') || text.trim().contains('일')) {
-      print('일에 도달함');
+
       _onChoiceBtnClicked(0);
+      print('넥스트 페이지 전까지 ');
       _speech.stop();
     } else if (text.trim().contains('2') || text.trim().contains('이')) {
       _onChoiceBtnClicked(1);
@@ -1100,7 +1186,7 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
 
       //이쯤에서 미리 무응답에대한 처리 수행
       questionChoiceItem.choiceNo = '1';
-      questionChoiceItem.choiceScore = '1'; //임시방편
+      questionChoiceItem.choiceScore = '1'; //미선택 문항시 기본값
 
       for (int j = 0; j < questionItem.questionChoiceList.length; j++) {
         //답이 선택되있는 원본모델

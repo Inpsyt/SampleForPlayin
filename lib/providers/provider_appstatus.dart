@@ -1,25 +1,31 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:playinsample/models/model_userInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProviderAppStatus extends ChangeNotifier{
 
-  String userStatus;
+  ModelUserInfo _userInfo;
 
-  Future<String> getUserStatus() async{
+
+  Future<ModelUserInfo> getUserInfo() async{
+    _userInfo = ModelUserInfo();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    userStatus = prefs.getString('userStatus')?? '이름없음';
+    _userInfo.testerName = prefs.getString('testerName')?? '이름없음';
+    _userInfo.groupName = prefs.getString('groupName')??'서비스기획팀';
 
-    return this.userStatus;
+    return this._userInfo;
   }
 
-  setUserStatus(String userStatus) async{
-    this.userStatus = userStatus;
+  setUserInfo(ModelUserInfo userInfo) async{
+
+    this._userInfo = userInfo;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userStatus', userStatus);
+    prefs.setString('testerName', _userInfo.testerName);
+    prefs.setString('groupName', _userInfo.groupName);
     notifyListeners();
   }
 
