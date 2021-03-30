@@ -246,14 +246,32 @@ class ScreenSelect extends StatelessWidget {
                                       )),
                                   SizedBox(height: 20,),
                                   FlatButton(
-                                    onPressed: () {
+                                    onPressed: () async{
+
+                                      String psyCode = _psyCodeInputController.text.replaceAll('-', '');
+                                      if(psyCode.length!=20)
+                                      {
+                                        await showDialog(context: context,builder: (context){
+                                          return AlertDialog(
+                                            title: Text('주의'),
+                                            content: Text('코드 형식이 올바르지 않습니다.\n다시입력해 주세요.'),
+                                            actions: [
+                                              FlatButton(onPressed: (){Navigator.pop(context,true);}, child: Text('OK'))
+                                            ],
+                                          );
+                                        },);
+
+                                        return;
+                                      }
+                                      _providerExam.setPsyOnlineCode(psyCode);
 
                                       ModelExam dummyModelExam = ModelExam('반가워요~','');
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (BuildContext context) {
                                             return ScreenQuestionPages(dummyModelExam,snapshot.data);
                                           }));
-                                      _providerExam.setPsyOnlineCode(_psyCodeInputController.text);
+
+
                                     },
                                     child: Text(
                                       '검사실시',
