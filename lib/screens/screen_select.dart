@@ -6,6 +6,7 @@ import 'package:playinsample/providers/provider_appstatus.dart';
 import 'package:playinsample/providers/provider_exam.dart';
 import 'package:playinsample/screens/screen_profileset.dart';
 import 'package:playinsample/screens/screen_questionpages.dart';
+import 'package:playinsample/screens/widgets/widget_sidemenu_drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constant_colors.dart';
@@ -28,8 +29,6 @@ class ScreenSelect extends StatelessWidget {
     print('ScreenSelect : 빌드 새로고침');
 
     _providerExam = Provider.of<ProviderExam>(context, listen: false);
-
-
 
     _providerExam.setOfflineList();
 
@@ -113,6 +112,7 @@ class ScreenSelect extends StatelessWidget {
                 })
           ],
         ),
+        drawer: WidgetSidemenuDrawer(),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
