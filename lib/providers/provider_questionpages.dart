@@ -62,8 +62,11 @@ class ProviderQuestionPages extends ChangeNotifier {
     //https://inpsyt.co.kr/inpsyt/testing/ac2846e8823246c083ad
     await _commonNetworkService
         .get('https://inpsyt.co.kr/inpsyt/testing/${psyOnlineCode}');
+    print('provider_questionpages : get 1회 호출');
+
     await _commonNetworkService
         .get('https://inpsyt.co.kr/inpsyt/testing/${psyOnlineCode}');
+    print('provider_questionpages : get 2회 호출');
 
     //사용자 정보 입력
     await _commonNetworkService.post(
@@ -86,10 +89,13 @@ class ProviderQuestionPages extends ChangeNotifier {
             '&atRegionCd=0008'
             '&psyTerminalCd=PC'
             '&psyTerminalBrowserCd=chrome');
+    print('provider_questionpages : post 1회 호출');
 
     //문항JSON파일 내려받기
     String jsons = await _commonNetworkService.post(
         'https://inpsyt.co.kr/testing/questionListAjax?paperJson&atProgressRate&atTemplateCd=0003&atTypeCd=0004&userTestingNo=${psyOnlineCode}&psyItemId=KPRQ_CO_PG_P&psyItemVer=V1.0&subPsyItemId=00240083&yyyymm=202103&schId&psyTerminalCd=PC&psyTerminalBrowserCd=chrome');
+
+    print('provider_questionpages : post 2회 호출');
 
     final jsonResult = json.decode(jsons);
 

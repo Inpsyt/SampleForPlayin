@@ -7,20 +7,14 @@ class CommonNetworkService {
   final JsonEncoder _encoder = new JsonEncoder();
 
   Map<String, String> headers = {
-
-
-    'Content-Type': 'application/x-www-form-urlencoded',
-   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-   'Accept-Encoding': 'gzip, deflate, br',
-   'Host': 'inpsyt.co.kr',
-    'Connection' : 'keep-alive',
-   'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
-   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36',
-
-
+    //'Content-Type': 'application/x-www-form-urlencoded',
+   // 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+   // 'Accept-Encoding': 'gzip, deflate, br',
+   // 'Host': 'inpsyt.co.kr',
+   //  'Connection' : 'keep-alive',
+   // 'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+   // 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36',
     //'cookie' : 'JSESSIONID=F039FAEB68629D320E2B5F137BBCF6DA'
-
-
 };
   Map<String, String> cookies = {};
 
@@ -82,8 +76,8 @@ class CommonNetworkService {
         throw new Exception("Error while fetching data : ${statusCode}");
       }
 
-      print(statusCode);
-      //print(headers);
+      //print(statusCode);
+      print(headers);
 
       return res;
 
