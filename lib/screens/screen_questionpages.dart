@@ -411,6 +411,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                     children: [
                                       Stack(
                                         children: [
+
+
                                           AnimatedContainer(
                                             duration:
                                                 Duration(milliseconds: 500),
@@ -535,6 +537,9 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                                   );
                                                 }),
                                           ),
+
+                                          //상단부 그림자
+                                          /*
                                           Consumer<ProviderQuestionPages>(
                                             builder:
                                                 (context, provider, child) {
@@ -573,6 +578,8 @@ class _ScreenQuestionPagesState extends State<ScreenQuestionPages> {
                                               );
                                             },
                                           ),
+                                          */
+
                                           Consumer<ProviderQuestionPages>(
                                               builder:
                                                   (context, provider, child) {

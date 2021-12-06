@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
               primaryColorBrightness: Brightness.light,
               brightness: Brightness.light,
               primaryColorDark: Colors.black,
+              primaryIconTheme: IconThemeData(color: Colors.white),
               canvasColor: Colors.white,
               // next line is important!
               appBarTheme: AppBarTheme(brightness: Brightness.dark)),
